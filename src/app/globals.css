@@ -1,26 +1,316 @@
-@import "tailwindcss";
+/* Custom Premium CSS Design System - Sachin Yadav's Portfolio */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors */
+  --background: #060608;
+  --foreground: #FFFDF9; /* Cream */
+  
+  --color-black: #060608;
+  --color-black-card: #0D0D11;
+  --color-black-elevated: #15151A;
+  
+  --color-cream: #FFFDF9;
+  --color-cream-dim: #DCD8CF;
+  --color-cream-muted: #8E8A82;
+  
+  --color-red: #E63946; /* Warm vibrant red */
+  --color-red-bright: #FF2E44;
+  --color-red-dark: #A81B27;
+  --color-red-glow: rgba(230, 57, 70, 0.18);
+  --color-red-glow-strong: rgba(230, 57, 70, 0.4);
+  
+  --glass-bg: rgba(13, 13, 17, 0.6);
+  --glass-border: rgba(255, 253, 249, 0.05);
+  
+  /* Fonts */
+  --font-sans: var(--font-poppins), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-serif: var(--font-poppins), system-ui, sans-serif;
+  
+  /* Layout */
+  --max-width: 1400px;
+  --header-height: 80px;
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-black);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Elegant Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-black-elevated);
+  border: 2px solid var(--color-black);
+  border-radius: 8px;
+  transition: var(--transition-smooth);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-red);
+}
+
+/* Typography Selection */
+::selection {
+  background-color: var(--color-red);
+  color: var(--color-cream);
+}
+
+/* Core Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Typography styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
+
+.font-sans-title {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+}
+
+p {
+  color: var(--color-cream-dim);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(21, 21, 26, 0.7) 0%, rgba(13, 13, 17, 0.5) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2.5rem;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(230, 57, 70, 0.08), transparent 40%);
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card:hover {
+  border-color: rgba(230, 57, 70, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--color-red-glow);
+  transform: translateY(-5px);
+}
+
+/* Glowing buttons */
+.btn-primary {
+  background-color: var(--color-red);
+  color: var(--color-cream);
+  border: none;
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  z-index: 1;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-red-bright);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 25px var(--color-red-glow-strong);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-cream);
+  border: 1px solid var(--color-cream);
+  padding: 0.9rem 2.2rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-cream);
+  color: var(--color-black);
+  transform: translateY(-2px);
+}
+
+/* Glow Text & Accents */
+.text-glow-red {
+  text-shadow: 0 0 20px rgba(230, 57, 70, 0.6);
+}
+
+.text-glow-cream {
+  text-shadow: 0 0 20px rgba(255, 253, 249, 0.4);
+}
+
+.accent-bar {
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-red), transparent);
+  border-radius: 2px;
+  margin: 1.5rem 0;
+}
+
+/* Dot grid overlay for layout */
+.grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 40px 40px;
+  background-image: radial-gradient(circle, rgba(255, 253, 249, 0.02) 1px, transparent 1px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Red grid overlay for hero and timeline sections */
+.red-grid-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 80px 80px;
+  background-image: 
+    linear-gradient(to right, rgba(230, 57, 70, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 57, 70, 0.05) 1px, transparent 1px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Mouse-following light effect for grid sections */
+.mouse-light {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+.vignette-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(6, 6, 8, 0.7) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Main Layout Scaffolding */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  position: relative;
+  padding: 8rem 0;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 5rem 0;
+  }
+}
+
+
