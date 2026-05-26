@@ -296,6 +296,33 @@ export default function Projects() {
         "Mastered DOM manipulation, event handling, and state management patterns.",
         "Implemented responsive designs with modern CSS and semantic HTML."
       ]
+    },
+    {
+      num: "06",
+      title: "Interactive Portfolio",
+      sub: "3D Cyberpunk Showcase",
+      desc: "A highly immersive, interactive portfolio featuring a cyberpunk aesthetic, 3D WebGL scenes, interactive node mapping, and real-time terminal emulation.",
+      stack: ["Next.js", "React.js", "Three.js", "WebGL", "Framer Motion", "AWS Amplify"],
+      github: "https://github.com/SachinYadav2446/Portfolio",
+      live: "https://main.dw5hoa6sugvel.amplifyapp.com/",
+      role: "Lead Engineer & Designer. Architected custom WebGL starfields, node connection graphs, and complex Framer Motion animations to simulate a high-tech OS terminal.",
+      architecture: `
+┌─────────────────────────┐           ┌────────────────────────┐
+│    Interactive View     │  3D Maps  │     WebGL Engine       │
+│  (Next.js App Router)   │ ========= │ (Three.js / R3F Core)  │
+└─────────────────────────┘           └────────────────────────┘
+            │                                      │
+            ▼                                      ▼
+┌─────────────────────────┐           ┌────────────────────────┐
+│   Continuous Delivery   │           │   Animation Pipeline   │
+│  (AWS Amplify Hosting)  │ <======== │  (Framer Motion API)   │
+└─────────────────────────┘           └────────────────────────┘
+      `,
+      bullets: [
+        "Programmed a custom interactive SVG node map to display technical skills as a connected graph.",
+        "Designed and implemented a retro-futuristic CRT monitor terminal emulator for displaying projects.",
+        "Engineered scroll-linked binary decoding animations for section headings."
+      ]
     }
   ];
 
@@ -307,7 +334,8 @@ export default function Projects() {
         "demandsight": 1,
         "forecaster": 2,
         "enhancer": 3,
-        "js-basics": 4
+        "js-basics": 4,
+        "portfolio": 5
       };
       
       const idx = indexMap[projId];
