@@ -89,34 +89,6 @@ function TiltPanel({ children, style, className, maxTilt = 5 }) {
 }
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus("sending");
-    
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      const data = await response.json();
-      if (response.ok && data.success) {
-        setStatus("success");
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        setStatus("error");
-      }
-    } catch (err) {
-      console.error("Error transmitting message:", err);
-      setStatus("error");
-    }
-  };
 
   return (
     <section id="contact" style={{ background: "#060608", borderTop: "1px solid var(--glass-border)", position: "relative", zIndex: 2 }}>
