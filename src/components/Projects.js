@@ -323,6 +323,33 @@ export default function Projects() {
         "Designed and implemented a retro-futuristic CRT monitor terminal emulator for displaying projects.",
         "Engineered scroll-linked binary decoding animations for section headings."
       ]
+    },
+    {
+      num: "07",
+      title: "Creatify",
+      sub: "Browser-Native Design Suite",
+      desc: "A professional, high-performance browser-native design suite that unites 8 fully functional creative applications into a single unified workspace. Built with a cohesive modern aesthetic, dark-mode glassmorphic layouts, and an Express-powered PostgreSQL sync server.",
+      stack: ["React 18", "Vite", "Node.js", "Express", "PostgreSQL", "Canvas/SVG"],
+      github: "https://github.com/SachinYadav2446/Video-editor",
+      live: "https://video-editor-1-1xu2.onrender.com/",
+      role: "Full Stack Developer. Architected the unified workspace, developed 8 distinct studio modules, and implemented real-time sync with PostgreSQL.",
+      architecture: `
+┌─────────────────────────┐           ┌────────────────────────┐
+│     Client Browser      │  REST API │    Express Backend     │
+│   (React + Canvas/SVG)  │ ========= │    (Node.js + JWT)     │
+└─────────────────────────┘           └────────────────────────┘
+            │                                      │
+            ▼                                      ▼
+┌─────────────────────────┐           ┌────────────────────────┐
+│   8 Creative Studios    │           │  Neon PostgreSQL DB    │
+│  (Video, Image, Logo)   │ <======== │ (Serverless WebSockets)│
+└─────────────────────────┘           └────────────────────────┘
+      `,
+      bullets: [
+        "Built an 8-in-1 design suite including video editing, image manipulation, logo generation, and presentation creation.",
+        "Engineered dynamic canvas workspaces with multi-track timeline sequencing, interactive drag-and-drop, and real-time SVG rendering.",
+        "Integrated a secure backend with JWT authentication, Bcrypt passwords, and serverless PostgreSQL database synchronization."
+      ]
     }
   ];
 
@@ -335,7 +362,8 @@ export default function Projects() {
         "forecaster": 2,
         "enhancer": 3,
         "js-basics": 4,
-        "portfolio": 5
+        "portfolio": 5,
+        "creatify": 6
       };
       
       const idx = indexMap[projId];
