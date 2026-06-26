@@ -1,4 +1,4 @@
-# Interactive Developer Portfolio 🚀
+# Interactive Developer Portfolio 
 
 A highly immersive, cyberpunk-inspired developer portfolio built with **Next.js**, **React**, **Three.js**, and **Framer Motion**. This portfolio acts as a "Creative Engineering Monitor," showcasing full-stack projects, a real-time signal grid of skills, and an interactive 3D environment.
 
@@ -6,7 +6,7 @@ A highly immersive, cyberpunk-inspired developer portfolio built with **Next.js*
 
 ---
 
-## ✨ Features
+## Features
 
 - **Retro-Futuristic UI:** A design system built from scratch using raw CSS, featuring glassmorphism, CRT terminal emulation, glowing accents, and high-tech typography.
 - **Interactive 3D Elements:** An integrated WebGL canvas using Three.js/React Three Fiber with floating geometries.
@@ -28,7 +28,7 @@ A highly immersive, cyberpunk-inspired developer portfolio built with **Next.js*
 
 ---
 
-## 🚀 Running Locally
+## Running Locally
 
 If you'd like to run this project locally on your machine:
 
@@ -53,17 +53,17 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 📦 Deployment
+## Deployment
 
 This project is configured for continuous deployment on **AWS Amplify**.
 Pushing to the `main` branch automatically triggers a build and deploys the latest version using the `amplify.yml` configuration.
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Sachin Yadav**
 - **GitHub:** [@SachinYadav2446](https://github.com/SachinYadav2446)
 - **LinkedIn:** [Sachin Yadav](https://www.linkedin.com/in/sachin-yadav-54646a322/)
 
-*Feel free to star ⭐ this repository if you find it inspiring!*
+*Feel free to star  this repository if you find it inspiring!*
