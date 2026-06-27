@@ -13,11 +13,6 @@ import SocialStrip from "@/components/SocialStrip";
 const GlobalCanvas = dynamic(() => import("@/components/GlobalCanvas"), {
   ssr: false
 });
-
-const CustomCursor = dynamic(() => import("@/components/CustomCursor"), {
-  ssr: false
-});
-
 const CreativeHero = dynamic(() => import("@/components/CreativeHero"), {
   ssr: false,
   loading: () => (
@@ -41,33 +36,6 @@ const CreativeHero = dynamic(() => import("@/components/CreativeHero"), {
     </div>
   )
 });
-
-const CreativeLab = dynamic(() => import("@/components/CreativeLab"), {
-  ssr: false,
-  loading: () => (
-    <div style={{
-      width: "100%",
-      height: "500px",
-      background: "#0A0A0E",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      border: "1px solid var(--glass-border)",
-      borderRadius: "20px"
-    }}>
-      <div style={{
-        fontFamily: "var(--font-sans)",
-        color: "var(--color-cream-muted)",
-        fontSize: "0.85rem",
-        letterSpacing: "0.15em",
-        textTransform: "uppercase"
-      }}>
-        Booting WebGL Kernel...
-      </div>
-    </div>
-  )
-});
-
 const NetworkMap = dynamic(() => import("@/components/NetworkMap"), {
   ssr: false
 });
@@ -75,9 +43,6 @@ const NetworkMap = dynamic(() => import("@/components/NetworkMap"), {
 export default function Home() {
   return (
     <>
-      {/* Interactive trailing custom cursor */}
-      <CustomCursor />
-
       {/* Global 3D dynamic particle field behind everything */}
       <GlobalCanvas />
 
@@ -98,9 +63,6 @@ export default function Home() {
 
         {/* Interactive Octopus Node Map Network */}
         <NetworkMap />
-
-        {/* Interactive 3D WebGL Sandbox Playground */}
-        <CreativeLab />
 
         {/* Social Links Moving Strip */}
         <SocialStrip />

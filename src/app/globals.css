@@ -40,6 +40,10 @@
   margin: 0;
 }
 
+html {
+  font-size: 85%;
+}
+
 html, body {
   width: 100%;
   min-height: 100vh;

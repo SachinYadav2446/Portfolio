@@ -293,27 +293,6 @@ function TypewriterConsole() {
   );
 }
 
-// Dynamic CPU Activity Graph component for sci-fi telemetry
-function ActivityGraph() {
-  return (
-    <div style={{ display: "flex", alignItems: "flex-end", gap: "3px", height: "32px", width: "100%", background: "rgba(0,0,0,0.5)", border: "1px solid rgba(230, 57, 70, 0.2)", padding: "0.4rem", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
-      <div style={{ position: "absolute", top: "2px", left: "6px", fontSize: "0.45rem", fontFamily: "monospace", color: "rgba(230, 57, 70, 0.6)", letterSpacing: "0.1em" }}>SYS_FREQUENCY_MONITOR</div>
-      <span className="cpu-bar cbar-1" />
-      <span className="cpu-bar cbar-2" />
-      <span className="cpu-bar cbar-3" />
-      <span className="cpu-bar cbar-4" />
-      <span className="cpu-bar cbar-5" />
-      <span className="cpu-bar cbar-6" />
-      <span className="cpu-bar cbar-7" />
-      <span className="cpu-bar cbar-8" />
-      <span className="cpu-bar cbar-9" />
-      <span className="cpu-bar cbar-10" />
-      <span className="cpu-bar cbar-11" />
-      <span className="cpu-bar cbar-12" />
-    </div>
-  );
-}
-
 export default function CreativeHero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [lightPos, setLightPos] = useState({ x: 0, y: 0 });
@@ -540,9 +519,6 @@ export default function CreativeHero() {
             {/* 1. Typewriter Console */}
             <TypewriterConsole />
 
-            {/* CPU Frequency Graph */}
-            <ActivityGraph />
-
             {/* 2. SVG Skill Radial Dial Gauges */}
             <div style={{ display: "flex", justifyContent: "space-between", gap: "1.0rem" }}>
               <SkillDial label="Full-Stack" percentage={92} delay={0.2} />
@@ -608,32 +584,6 @@ export default function CreativeHero() {
         }
         .hud-outer-spin {
           animation: spinOuter 12s linear infinite;
-        }
-        
-        /* CPU Frequency Graph Animation */
-        .cpu-bar {
-          display: inline-block;
-          flex: 1;
-          background: var(--color-red);
-          border-radius: 1px;
-          animation: bounceCpu 1s infinite alternate ease-in-out;
-        }
-        .cbar-1 { height: 30%; animation-delay: 0.1s; animation-duration: 0.8s; }
-        .cbar-2 { height: 75%; animation-delay: 0.25s; animation-duration: 1.1s; }
-        .cbar-3 { height: 50%; animation-delay: 0.15s; animation-duration: 0.9s; }
-        .cbar-4 { height: 90%; animation-delay: 0.4s; animation-duration: 1.2s; }
-        .cbar-5 { height: 20%; animation-delay: 0.3s; animation-duration: 0.75s; }
-        .cbar-6 { height: 60%; animation-delay: 0.2s; animation-duration: 1.0s; }
-        .cbar-7 { height: 85%; animation-delay: 0.45s; animation-duration: 1.15s; }
-        .cbar-8 { height: 40%; animation-delay: 0.35s; animation-duration: 0.85s; }
-        .cbar-9 { height: 95%; animation-delay: 0.5s; animation-duration: 1.3s; }
-        .cbar-10 { height: 35%; animation-delay: 0.1s; animation-duration: 0.95s; }
-        .cbar-11 { height: 70%; animation-delay: 0.2s; animation-duration: 1.05s; }
-        .cbar-12 { height: 55%; animation-delay: 0.3s; animation-duration: 0.88s; }
-        
-        @keyframes bounceCpu {
-          from { height: 4px; opacity: 0.4; }
-          to { height: 24px; opacity: 1; filter: brightness(1.2) drop-shadow(0 0 3px var(--color-red)); }
         }
         @keyframes pulse-glowing {
           0%, 100% { transform: scale(1); opacity: 0.6; }
