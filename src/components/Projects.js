@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, X, Info, Layers, CheckCircle } from "lucide-react";
 import BinaryHeading from "./BinaryHeading";
 
-function ProjectCard({ proj, idx, onInspect }) {
+function ProjectCard({ proj, idx, onInspect, audio }) {
   return (
     <div
       style={{
@@ -44,6 +44,8 @@ function ProjectCard({ proj, idx, onInspect }) {
                   style={{ color: "var(--color-cream-muted)", transition: "var(--transition-smooth)" }}
                   className="proj-icon-link"
                   title="GitHub Repository"
+                  onMouseEnter={() => audio?.playHover()}
+                  onClick={() => audio?.playClick()}
                 >
                   <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ display: "block" }}>
                     <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
@@ -58,6 +60,8 @@ function ProjectCard({ proj, idx, onInspect }) {
                   style={{ color: "var(--color-cream-muted)", transition: "var(--transition-smooth)" }}
                   className="proj-icon-link"
                   title="Live Preview"
+                  onMouseEnter={() => audio?.playHover()}
+                  onClick={() => audio?.playClick()}
                 >
                   <ExternalLink size={16} />
                 </a>
@@ -125,7 +129,11 @@ function ProjectCard({ proj, idx, onInspect }) {
           </div>
 
           <button
-            onClick={() => onInspect(proj)}
+            onClick={() => {
+              onInspect(proj);
+              audio?.playClick();
+            }}
+            onMouseEnter={() => audio?.playHover()}
             style={{
               width: "100%",
               background: "rgba(230, 57, 70, 0.04)",
@@ -156,7 +164,7 @@ function ProjectCard({ proj, idx, onInspect }) {
   );
 }
 
-export default function Projects() {
+export default function Projects({ audio }) {
   const [activeProject, setActiveProject] = useState(null);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -448,7 +456,11 @@ export default function Projects() {
           
           {/* Prev Arrow */}
           <button
-            onClick={handlePrev}
+            onClick={() => {
+              handlePrev();
+              audio?.playClick();
+            }}
+            onMouseEnter={() => audio?.playHover()}
             style={{
               background: "rgba(255,255,255,0.02)",
               border: "1px solid var(--glass-border)",
@@ -570,7 +582,7 @@ export default function Projects() {
                           exit="exit"
                           style={{ width: "100%", height: "100%" }}
                         >
-                          <ProjectCard proj={projectList[index]} idx={index} onInspect={setActiveProject} />
+                          <ProjectCard proj={projectList[index]} idx={index} onInspect={setActiveProject} audio={audio} />
                         </motion.div>
                       </AnimatePresence>
                     </motion.div>
@@ -680,7 +692,11 @@ export default function Projects() {
                       }}>
                         {/* Terminate Session Button (Back) */}
                         <button
-                          onClick={() => setActiveProject(null)}
+                          onClick={() => {
+                            setActiveProject(null);
+                            audio?.playClick();
+                          }}
+                          onMouseEnter={() => audio?.playHover()}
                           style={{
                             background: "rgba(230, 57, 70, 0.08)",
                             border: "1px solid rgba(230, 57, 70, 0.3)",
@@ -823,7 +839,11 @@ export default function Projects() {
 
           {/* Next Arrow */}
           <button
-            onClick={handleNext}
+            onClick={() => {
+              handleNext();
+              audio?.playClick();
+            }}
+            onMouseEnter={() => audio?.playHover()}
             style={{
               background: "rgba(255,255,255,0.02)",
               border: "1px solid var(--glass-border)",
@@ -859,7 +879,11 @@ export default function Projects() {
             {projectList.map((_, dIdx) => (
               <button
                 key={dIdx}
-                onClick={() => goToIndex(dIdx)}
+                onClick={() => {
+                  goToIndex(dIdx);
+                  audio?.playClick();
+                }}
+                onMouseEnter={() => audio?.playHover()}
                 style={{
                   width: index === dIdx ? "24px" : "8px",
                   height: "8px",

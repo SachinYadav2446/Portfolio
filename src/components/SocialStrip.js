@@ -10,7 +10,7 @@ const socialLinks = [
   { name: "LinkedIn", icon: <ExternalLink size={24} />, url: "https://www.linkedin.com/in/sachin-yadav-54646a322/" },
 ];
 
-export default function SocialStrip() {
+export default function SocialStrip({ audio }) {
   const stripRef = useRef(null);
 
   return (
@@ -36,6 +36,8 @@ export default function SocialStrip() {
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
+            onMouseEnter={() => audio?.playHover()}
+            onClick={() => audio?.playClick()}
             style={{
               display: "flex",
               alignItems: "center",

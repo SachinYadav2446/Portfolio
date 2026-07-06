@@ -56,7 +56,7 @@ function TiltPanel({ children, style, className, maxTilt = 8 }) {
   );
 }
 
-export default function About() {
+export default function About({ audio }) {
   const skills = [
     { category: "Backend & Languages", items: ["Python", "Golang", "Java", "Node.js", "Express", "FastAPI", "C++ / OOP"] },
     { category: "Machine Learning & Data", items: ["NumPy", "Pandas", "Matplotlib", "Seaborn", "PyTorch", "Supervised ML", "Unsupervised ML", "GenAI"] },
@@ -94,12 +94,24 @@ export default function About() {
 
             {/* Micro Cards */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }} className="mini-cards">
-              <TiltPanel className="glass-panel clickable" style={{ padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--glass-border)" }} maxTilt={10}>
+              <TiltPanel 
+                className="glass-panel clickable" 
+                style={{ padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--glass-border)" }} 
+                maxTilt={10}
+                onMouseEnter={() => audio?.playHover()}
+                onClick={() => audio?.playClick()}
+              >
                 <Cpu size={24} color="var(--color-red)" style={{ marginBottom: "0.5rem" }} />
                 <h4 style={{ fontSize: "1.05rem", fontFamily: "var(--font-sans)", marginBottom: "0.25rem" }}>100% Custom Design</h4>
                 <p style={{ fontSize: "0.85rem", color: "var(--color-cream-muted)", margin: 0 }}>Written from scratch with pure, optimized CSS styling.</p>
               </TiltPanel>
-              <TiltPanel className="glass-panel clickable" style={{ padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--glass-border)" }} maxTilt={10}>
+              <TiltPanel 
+                className="glass-panel clickable" 
+                style={{ padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--glass-border)" }} 
+                maxTilt={10}
+                onMouseEnter={() => audio?.playHover()}
+                onClick={() => audio?.playClick()}
+              >
                 <Award size={24} color="var(--color-red)" style={{ marginBottom: "0.5rem" }} />
                 <h4 style={{ fontSize: "1.05rem", fontFamily: "var(--font-sans)", marginBottom: "0.25rem" }}>3D Integration</h4>
                 <p style={{ fontSize: "0.85rem", color: "var(--color-cream-muted)", margin: 0 }}>Fusing GPU-accelerated WebGL directly into UI states.</p>
@@ -136,6 +148,7 @@ export default function About() {
                           transition: "all 0.3s ease"
                         }}
                         className="skill-tag clickable"
+                        onMouseEnter={() => audio?.playHover()}
                       >
                         {skill}
                       </span>
@@ -149,7 +162,7 @@ export default function About() {
         </div>
 
         {/* Academic Journey - Full Page Scroll */}
-        <AcademicJourney />
+        <AcademicJourney audio={audio} />
 
       </div>
 

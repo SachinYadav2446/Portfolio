@@ -88,7 +88,7 @@ function TiltPanel({ children, style, className, maxTilt = 5 }) {
   );
 }
 
-export default function Contact() {
+export default function Contact({ audio }) {
 
   return (
     <section id="contact" style={{ background: "#060608", borderTop: "1px solid var(--glass-border)", position: "relative", zIndex: 2 }}>
@@ -133,7 +133,13 @@ export default function Contact() {
                 <div>
                   <span style={{ display: "block", fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--color-cream-muted)", marginBottom: "0.45rem" }}>Email Direct</span>
                   <Magnetic distance={0.35}>
-                    <a href="mailto:yadavsachin2446@gmail.com" style={{ display: "block", color: "var(--color-cream)", textDecoration: "none", fontSize: "1.05rem", fontWeight: "600", transition: "var(--transition-smooth)" }} className="info-link clickable">
+                    <a 
+                      href="mailto:yadavsachin2446@gmail.com" 
+                      style={{ display: "block", color: "var(--color-cream)", textDecoration: "none", fontSize: "1.05rem", fontWeight: "600", transition: "var(--transition-smooth)" }} 
+                      className="info-link clickable"
+                      onMouseEnter={() => audio?.playHover()}
+                      onClick={() => audio?.playClick()}
+                    >
                       yadavsachin2446@gmail.com
                     </a>
                   </Magnetic>
@@ -193,6 +199,8 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--color-cream)", textDecoration: "none", fontSize: "0.95rem", transition: "var(--transition-smooth)" }}
                     className="info-link clickable"
+                    onMouseEnter={() => audio?.playHover()}
+                    onClick={() => audio?.playClick()}
                   >
                     <Link size={16} color="var(--color-red)" />
                     GitHub Profile
@@ -203,6 +211,8 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--color-cream)", textDecoration: "none", fontSize: "0.95rem", transition: "var(--transition-smooth)" }}
                     className="info-link clickable"
+                    onMouseEnter={() => audio?.playHover()}
+                    onClick={() => audio?.playClick()}
                   >
                     <ExternalLink size={16} color="var(--color-red)" />
                     LinkedIn Profile
@@ -213,6 +223,8 @@ export default function Contact() {
                     rel="noopener noreferrer"
                     style={{ display: "flex", alignItems: "center", gap: "0.75rem", color: "var(--color-cream)", textDecoration: "none", fontSize: "0.95rem", transition: "var(--transition-smooth)" }}
                     className="info-link clickable"
+                    onMouseEnter={() => audio?.playHover()}
+                    onClick={() => audio?.playClick()}
                   >
                     <Code size={16} color="var(--color-red)" />
                     LeetCode Profile

@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, FileText, Mail, Terminal, Cpu, Sparkles, Orbit } from "lucide-react";
+import { ArrowRight, FileText, Mail, Terminal, Cpu, Sparkles, Orbit, Volume2, VolumeX, Music } from "lucide-react";
 
 // Elegant magnetic wrapper for interactive buttons and tag badges
 function Magnetic({ children, distance = 0.35 }) {
@@ -293,7 +293,7 @@ function TypewriterConsole() {
   );
 }
 
-export default function CreativeHero() {
+export default function CreativeHero({ audio }) {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [lightPos, setLightPos] = useState({ x: 0, y: 0 });
   const sectionRef = useRef(null);
@@ -467,12 +467,22 @@ export default function CreativeHero() {
             {/* Action buttons */}
             <div style={{ display: "flex", gap: "1.0rem", flexWrap: "wrap" }}>
               <Magnetic distance={0.15}>
-                <a href="#projects" className="btn-primary clickable">
+                <a 
+                  href="#projects" 
+                  className="btn-primary clickable"
+                  onMouseEnter={() => audio?.playHover()}
+                  onClick={() => audio?.playClick()}
+                >
                   Inspect Works <ArrowRight size={16} />
                 </a>
               </Magnetic>
               <Magnetic distance={0.15}>
-                <a href="#contact" className="btn-secondary clickable">
+                <a 
+                  href="#contact" 
+                  className="btn-secondary clickable"
+                  onMouseEnter={() => audio?.playHover()}
+                  onClick={() => audio?.playClick()}
+                >
                   Establish Signal <Mail size={16} />
                 </a>
               </Magnetic>
@@ -518,6 +528,77 @@ export default function CreativeHero() {
 
             {/* 1. Typewriter Console */}
             <TypewriterConsole />
+
+            {/* Audio Telemetry System */}
+            <div 
+              style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "space-between", 
+                gap: "0.8rem", 
+                background: "rgba(0,0,0,0.5)", 
+                border: "1px solid rgba(230, 57, 70, 0.2)", 
+                padding: "0.5rem 0.8rem", 
+                borderRadius: "6px", 
+                fontFamily: "monospace", 
+                fontSize: "0.65rem",
+                color: "var(--color-cream-dim)"
+              }}
+              onMouseEnter={() => audio?.playHover()}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <Music size={12} color={audio?.isActive ? "var(--color-red)" : "rgba(255,255,255,0.2)"} style={{ animation: audio?.isActive ? "pulse-glowing 2s infinite" : "none" }} />
+                <span>AUDIO_SYS:</span>
+                <span style={{ color: audio?.isActive ? "var(--color-red)" : "rgba(255,255,255,0.3)", fontWeight: "bold" }}>
+                  {audio?.isActive ? "ACTIVE_DRIVE" : "OFFLINE"}
+                </span>
+              </div>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+                  {audio?.volume === 0 ? <VolumeX size={12} /> : <Volume2 size={12} />}
+                  <input 
+                    type="range" 
+                    min="0" 
+                    max="1" 
+                    step="0.05" 
+                    value={audio?.volume || 0} 
+                    onChange={(e) => audio?.setVolume(parseFloat(e.target.value))}
+                    disabled={!audio?.isActive}
+                    style={{ 
+                      width: "50px", 
+                      height: "3px", 
+                      accentColor: "var(--color-red)", 
+                      background: "rgba(255,255,255,0.1)",
+                      border: "none",
+                      outline: "none",
+                      cursor: audio?.isActive ? "pointer" : "not-allowed"
+                    }}
+                    title="Volume slider"
+                  />
+                  <span>{Math.round((audio?.volume || 0) * 100)}%</span>
+                </div>
+
+                <button 
+                  onClick={() => audio?.toggleAudio()}
+                  style={{
+                    background: audio?.isActive ? "rgba(230, 57, 70, 0.15)" : "rgba(255,255,255,0.05)",
+                    border: `1px solid ${audio?.isActive ? "var(--color-red)" : "rgba(255,255,255,0.15)"}`,
+                    color: audio?.isActive ? "var(--color-cream)" : "var(--color-cream-muted)",
+                    padding: "0.25rem 0.5rem",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                    fontSize: "0.55rem",
+                    fontFamily: "monospace",
+                    transition: "all 0.3s ease",
+                    boxShadow: audio?.isActive ? "0 0 8px rgba(230, 57, 70, 0.4)" : "none"
+                  }}
+                  onMouseEnter={() => audio?.playHover()}
+                >
+                  {audio?.isActive ? "PAUSE" : "ENGAGE"}
+                </button>
+              </div>
+            </div>
 
             {/* 2. SVG Skill Radial Dial Gauges */}
             <div style={{ display: "flex", justifyContent: "space-between", gap: "1.0rem" }}>

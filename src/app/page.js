@@ -7,6 +7,7 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import SocialStrip from "@/components/SocialStrip";
+import useAudio from "@/components/useAudio";
 
 // Dynamically import 3D-heavy and client-only components with ssr: false
 // This completely avoids Next.js server pre-rendering of WebGL elements (avoiding document/window errors)
@@ -41,34 +42,36 @@ const NetworkMap = dynamic(() => import("@/components/NetworkMap"), {
 });
 
 export default function Home() {
+  const audio = useAudio();
+
   return (
     <>
       {/* Global 3D dynamic particle field behind everything */}
       <GlobalCanvas />
 
       {/* Sticky Navbar */}
-      <Navbar />
+      <Navbar audio={audio} />
 
       {/* Main layout */}
       <main style={{ position: "relative", zIndex: 10 }}>
         
         {/* Flagship Typographic Hero Layout */}
-        <CreativeHero />
+        <CreativeHero audio={audio} />
 
         {/* About & Timeline Section */}
-        <About />
+        <About audio={audio} />
 
         {/* Selected Work Portfolio Grid */}
-        <Projects />
+        <Projects audio={audio} />
 
         {/* Interactive Octopus Node Map Network */}
-        <NetworkMap />
+        <NetworkMap audio={audio} />
 
         {/* Social Links Moving Strip */}
-        <SocialStrip />
+        <SocialStrip audio={audio} />
 
         {/* Contact Signal Transmission Section */}
-        <Contact />
+        <Contact audio={audio} />
 
       </main>
     </>

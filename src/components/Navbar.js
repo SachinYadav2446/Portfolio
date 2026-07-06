@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-export default function Navbar() {
+export default function Navbar({ audio }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const links = [
@@ -37,7 +37,13 @@ export default function Navbar() {
           
           {/* Left Side: Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.8rem" }}>
-            <a href="#home" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.6rem" }} className="clickable">
+            <a 
+              href="#home" 
+              style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "0.6rem" }} 
+              className="clickable"
+              onMouseEnter={() => audio?.playHover()}
+              onClick={() => audio?.playClick()}
+            >
               <div style={{
                 position: "relative",
                 width: "36px",
@@ -84,6 +90,8 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
+                onMouseEnter={() => audio?.playHover()}
+                onClick={() => audio?.playClick()}
                 style={{
                   textDecoration: "none",
                   color: "var(--color-cream-dim)",
@@ -111,7 +119,11 @@ export default function Navbar() {
           <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+                audio?.playClick();
+              }}
+              onMouseEnter={() => audio?.playHover()}
               style={{
                 display: "none",
                 background: "rgba(230, 57, 70, 0.1)",
@@ -145,7 +157,11 @@ export default function Navbar() {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    audio?.playClick();
+                  }}
+                  onMouseEnter={() => audio?.playHover()}
                   style={{
                     textDecoration: "none",
                     color: "var(--color-cream-dim)",
@@ -167,7 +183,11 @@ export default function Navbar() {
               ))}
               <a
                 href="#contact"
-                onClick={() => setIsOpen(false)}
+                onClick={() => {
+                  setIsOpen(false);
+                  audio?.playClick();
+                }}
+                onMouseEnter={() => audio?.playHover()}
                 className="btn-primary clickable"
                 style={{ 
                   justifyContent: "center", 

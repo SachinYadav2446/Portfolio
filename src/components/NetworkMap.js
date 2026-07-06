@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Cpu } from "lucide-react";
 import BinaryHeading from "./BinaryHeading";
 
-export default function NetworkMap() {
+export default function NetworkMap({ audio }) {
   const [hoveredNode, setHoveredNode] = useState(null);
   const viewportRef = useRef(null);
   const [vpW, setVpW] = useState(1280); // measured viewport width
@@ -319,7 +319,10 @@ export default function NetworkMap() {
             return (
               <motion.div
                 key={node.id}
-                onMouseEnter={() => setHoveredNode(node.id)}
+                onMouseEnter={() => {
+                  setHoveredNode(node.id);
+                  audio?.playHover();
+                }}
                 onMouseLeave={() => setHoveredNode(null)}
                 animate={{ x: [0, node.floatX, 0], y: [0, node.floatY, 0] }}
                 transition={{ duration: node.dur, repeat: Infinity, ease: "easeInOut" }}
