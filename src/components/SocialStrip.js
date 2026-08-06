@@ -1,38 +1,58 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import { Link, ExternalLink, Code, Trophy } from "lucide-react";
 
 const socialLinks = [
-  { name: "GitHub", icon: <Link size={24} />, url: "https://github.com/SachinYadav2446" },
-  { name: "LeetCode", icon: <Code size={24} />, url: "https://leetcode.com/u/SY_45/" },
-  { name: "CodeChef", icon: <Trophy size={24} />, url: "https://www.codechef.com/users/ms240410700001" },
-  { name: "LinkedIn", icon: <ExternalLink size={24} />, url: "https://www.linkedin.com/in/sachin-yadav-54646a322/" },
+  { name: "github.com/SachinYadav2446",                icon: <Link size={13} />,        url: "https://github.com/SachinYadav2446",                     color: "var(--color-purple)" },
+  { name: "leetcode.com/u/SY_45",                      icon: <Code size={13} />,        url: "https://leetcode.com/u/SY_45/",                          color: "var(--color-orange)" },
+  { name: "codechef.com/users/ms240410700001",          icon: <Trophy size={13} />,      url: "https://www.codechef.com/users/ms240410700001",           color: "var(--color-yellow)" },
+  { name: "linkedin.com/in/sachin-yadav-54646a322",    icon: <ExternalLink size={13} />,url: "https://www.linkedin.com/in/sachin-yadav-54646a322/",    color: "var(--color-cyan)"   },
 ];
 
 export default function SocialStrip({ audio }) {
-  const stripRef = useRef(null);
+  const items = [...socialLinks, ...socialLinks, ...socialLinks];
 
   return (
-    <section
+    <div
       style={{
-        background: "#060608",
-        padding: "1rem 0",
+        background: "var(--color-bg-card)",
+        borderTop: "1px solid var(--border-subtle)",
+        borderBottom: "1px solid var(--border-subtle)",
+        padding: "0.6rem 0",
+        overflow: "hidden",
         position: "relative",
-        overflow: "hidden"
       }}
     >
+      {/* Left fade */}
       <div
-        ref={stripRef}
+        style={{
+          position: "absolute",
+          left: 0, top: 0, bottom: 0, width: "80px",
+          background: "linear-gradient(to right, var(--color-bg-card), transparent)",
+          zIndex: 2, pointerEvents: "none",
+        }}
+      />
+      {/* Right fade */}
+      <div
+        style={{
+          position: "absolute",
+          right: 0, top: 0, bottom: 0, width: "80px",
+          background: "linear-gradient(to left, var(--color-bg-card), transparent)",
+          zIndex: 2, pointerEvents: "none",
+        }}
+      />
+
+      <div
         style={{
           display: "flex",
-          animation: "scroll 20s linear infinite",
-          width: "max-content"
+          animation: "strip-scroll 24s linear infinite",
+          width: "max-content",
         }}
       >
-        {[...socialLinks, ...socialLinks, ...socialLinks].map((link, index) => (
+        {items.map((link, i) => (
           <a
-            key={index}
+            key={i}
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
@@ -41,36 +61,33 @@ export default function SocialStrip({ audio }) {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "0.75rem",
-              padding: "1rem 2rem",
-              color: "var(--color-cream)",
+              gap: "0.5rem",
+              padding: "0.3rem 1.8rem",
+              color: "var(--color-fg-muted)",
               textDecoration: "none",
-              fontFamily: "var(--font-sans)",
-              fontSize: "1rem",
-              fontWeight: 600,
-              letterSpacing: "0.05em",
-              textTransform: "uppercase",
-              cursor: "pointer"
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.72rem",
+              letterSpacing: "0.02em",
+              transition: "color 0.2s",
+              borderRight: "1px solid var(--border-subtle)",
             }}
+            className="strip-link"
           >
-            <div style={{ color: "var(--color-red)" }}>
-              {link.icon}
-            </div>
-            {link.name}
+            <span style={{ color: link.color }}>{link.icon}</span>
+            <span>{link.name}</span>
           </a>
         ))}
       </div>
 
       <style jsx>{`
-        @keyframes scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-33.33%);
-          }
+        @keyframes strip-scroll {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-33.33%); }
+        }
+        .strip-link:hover {
+          color: var(--color-fg) !important;
         }
       `}</style>
-    </section>
+    </div>
   );
 }
