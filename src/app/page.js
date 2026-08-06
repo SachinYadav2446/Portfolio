@@ -3,7 +3,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
-import About from "@/components/About";
 import Contact from "@/components/Contact";
 import SocialStrip from "@/components/SocialStrip";
 import useAudio from "@/components/useAudio";
@@ -21,11 +20,10 @@ const CreativeHero = dynamic(() => import("@/components/CreativeHero"), {
   ),
 });
 
-const NetworkMap        = dynamic(() => import("@/components/NetworkMap"),        { ssr: false });
 const PullRequests      = dynamic(() => import("@/components/PullRequests"),      { ssr: false });
-const ExtensionMarketplace = dynamic(() => import("@/components/ExtensionMarketplace"), { ssr: false });
-const DebugPanel        = dynamic(() => import("@/components/DebugPanel"),        { ssr: false });
 const RecruiterMode      = dynamic(() => import("@/components/RecruiterMode"),      { ssr: false });
+const ExperienceMap      = dynamic(() => import("@/components/ExperienceMap"),      { ssr: false });
+const EngineeringNotes   = dynamic(() => import("@/components/EngineeringNotes"),   { ssr: false });
 
 export default function Home() {
   const audio = useAudio();
@@ -40,22 +38,13 @@ export default function Home() {
         {/* 00 — IDE Hero */}
         <CreativeHero audio={audio} />
 
-        {/* 01 — About + Git Timeline */}
-        <About audio={audio} />
-
-        {/* 02 — Projects as Pull Requests */}
-        <PullRequests audio={audio} />
-
-        {/* 03 — Skill Node Dependency Map */}
-        <NetworkMap audio={audio} />
-
-        {/* 04 — console.log() Debug Session */}
-        <DebugPanel audio={audio} />
-
-        {/* 05 — Extension Marketplace */}
+        <ExperienceMap audio={audio} />
         <RecruiterMode audio={audio} />
 
-        <ExtensionMarketplace audio={audio} />
+        <PullRequests audio={audio} />
+
+
+        <EngineeringNotes audio={audio} />
 
         {/* Social strip */}
         <SocialStrip audio={audio} />

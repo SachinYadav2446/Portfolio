@@ -1177,3 +1177,15 @@ section {
     grid-template-columns: 1fr !important;
   }
 }
+@media (max-width: 800px) {
+  .experience-layout,
+  .notes-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .experience-layout aside {
+    position: static !important;
+  }
+}

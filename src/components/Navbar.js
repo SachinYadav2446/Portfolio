@@ -9,18 +9,18 @@ const ThemeSettings = dynamic(() => import("./ThemeSettings"), { ssr: false });
 
 const IDE_TABS = [
   { name: "home.tsx",        href: "#home",         icon: "📄" },
-  { name: "about.md",        href: "#about",        icon: "📝" },
+  { name: "skills.ts",       href: "#home",         icon: "[S]" },
   { name: "pull-requests.md",href: "#pull-requests",icon: "🔀" },
-  { name: "debug-session.ts",href: "#debug",        icon: "🐛" },
-  { name: "recruiter.md",    href: "#recruiter",    icon: "[R]" },
-  { name: "extensions.mkt",  href: "#marketplace",  icon: "[E]" },
+  { name: "experience-map.md", href: "#experience-map", icon: "[M]" },
+  { name: "notes.md",          href: "#notes",          icon: "[N]" },
+  { name: "recruiter.md",      href: "#recruiter",      icon: "[R]" },
   { name: "contact.tsx",     href: "#contact",      icon: "📨" },
 ];
 
 const RPG_TABS = [
   { name: "character.rpg",   href: "#home",         icon: "🧙" },
   { name: "quest-log.rpg",   href: "#pull-requests",icon: "⚔️" },
-  { name: "skill-tree.rpg",  href: "#marketplace",  icon: "🌳" },
+  { name: "skill-tree.rpg",  href: "#experience-map",  icon: "🌳" },
   { name: "contact.rpg",     href: "#contact",      icon: "📜" },
 ];
 
@@ -33,7 +33,7 @@ const OS_TABS = [
 const GALLERY_TABS = [
   { name: "index.html",      href: "#home",         icon: "🖼️" },
   { name: "collection.html", href: "#pull-requests",icon: "📐" },
-  { name: "catalogue.html",  href: "#marketplace",  icon: "📚" },
+  { name: "catalogue.html",  href: "#experience-map",  icon: "📚" },
   { name: "contact.html",    href: "#contact",      icon: "✉️" },
 ];
 
