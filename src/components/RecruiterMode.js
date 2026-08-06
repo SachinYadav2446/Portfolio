@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Brain, Code2, ExternalLink, GitBranch, GitFork, RefreshCw, Server, Star } from "lucide-react";
+import { useTheme } from "./ThemeContext";
 
 const TRACKS = {
   "ml-dl": {
@@ -30,9 +31,19 @@ const TRACKS = {
   },
 };
 
+
+const THEME_PALETTES = {
+  ide: { accent: "#C8506A", highlight: "#E8A0A8", surface: "rgba(200,80,106,0.12)", background: "linear-gradient(135deg, #1A1014 0%, #211519 55%, #1A1014 100%)" },
+  rpg: { accent: "#FFD700", highlight: "#C084FC", surface: "rgba(255,215,0,0.12)", background: "radial-gradient(circle at 15% 15%, rgba(192,132,252,0.16), transparent 36%), #0A0818" },
+  os: { accent: "#0071E3", highlight: "#30D158", surface: "rgba(0,113,227,0.14)", background: "linear-gradient(135deg, #1C2B3A 0%, #263D52 48%, #1C2B3A 100%)" },
+  gallery: { accent: "#8B6F47", highlight: "#F8F6F1", surface: "rgba(139,111,71,0.16)", background: "linear-gradient(135deg, #F8F6F1 0%, #E9E2D5 46%, #F8F6F1 100%)" },
+};
+
 const formatDate = (date) => new Intl.DateTimeFormat("en", { month: "short", year: "numeric" }).format(new Date(date));
 
 export default function RecruiterMode({ audio }) {
+  const { theme } = useTheme();
+  const palette = THEME_PALETTES[theme] || THEME_PALETTES.ide;
   const [track, setTrack] = useState("ml-dl");
   const [github, setGithub] = useState(null);
   const [status, setStatus] = useState("loading");
@@ -53,15 +64,15 @@ export default function RecruiterMode({ audio }) {
   useEffect(() => { loadGithub(); }, []);
 
   return (
-    <section id="recruiter" style={{ background:"var(--color-bg)", borderTop:"1px solid var(--border-subtle)", padding:"6rem 0" }}>
+    <section id="recruiter" style={{ background:palette.background, borderTop:`2px solid ${palette.accent}`, boxShadow:`inset 0 1px 0 ${palette.highlight}33`, padding:"6rem 0" }}>
       <div className="container">
         <div style={{ display:"flex", gap:"1.25rem", justifyContent:"space-between", alignItems:"end", flexWrap:"wrap", marginBottom:"2rem" }}>
           <div>
-            <div className="font-sans-title" style={{ color:"var(--color-wine)", marginBottom:"0.65rem" }}>RECRUITER MODE / ROLE FIT</div>
-            <h2 style={{ fontSize:"clamp(2rem,4vw,3.5rem)", margin:0 }}>Find the right <span style={{ color:"var(--color-rose)" }}>signal.</span></h2>
+            <div className="font-sans-title" style={{ color:palette.accent, marginBottom:"0.65rem" }}>RECRUITER MODE / ROLE FIT</div>
+            <h2 style={{ fontSize:"clamp(2rem,4vw,3.5rem)", margin:0 }}>Find the right <span style={{ color:palette.highlight }}>signal.</span></h2>
             <p style={{ maxWidth:640, margin:"0.85rem 0 0" }}>Choose the role you are hiring for to see the most relevant strengths and evidence.</p>
           </div>
-          <a href="mailto:yadavsachin2446@gmail.com?subject=Portfolio%20opportunity" className="btn-primary" style={{ textDecoration:"none", padding:"0.7rem 1rem", fontSize:"0.72rem" }}>Start a conversation</a>
+          <a href="mailto:yadavsachin2446@gmail.com?subject=Portfolio%20opportunity" style={{ textDecoration:"none", padding:"0.7rem 1rem", fontSize:"0.72rem", background:palette.accent, color:theme === "gallery" ? "#F8F6F1" : "var(--color-bg)", borderRadius:4, fontFamily:"var(--font-mono)", fontWeight:700 }}>Start a conversation</a>
         </div>
 
         <div role="tablist" aria-label="Role focus" style={{ display:"flex", gap:"0.6rem", flexWrap:"wrap", marginBottom:"1.25rem" }}>
@@ -69,15 +80,15 @@ export default function RecruiterMode({ audio }) {
             const Icon = item.icon;
             const active = key === track;
             return <button key={key} role="tab" aria-selected={active} onClick={() => { setTrack(key); audio?.playClick(); }} onMouseEnter={() => audio?.playHover()}
-              style={{ display:"flex", alignItems:"center", gap:"0.45rem", background:active ? "var(--color-bg-elevated)" : "transparent", color:active ? "var(--color-cream)" : "var(--color-cream-muted)", border:`1px solid ${active ? item.accent : "var(--border-subtle)"}`, borderRadius:5, padding:"0.55rem 0.8rem", cursor:"pointer", fontFamily:"var(--font-mono)", fontSize:"0.7rem" }}>
+              style={{ display:"flex", alignItems:"center", gap:"0.45rem", background:active ? palette.surface : "transparent", color:active ? palette.highlight : "var(--color-cream-muted)", border:`1px solid ${active ? palette.accent : "var(--border-subtle)"}`, borderRadius:5, padding:"0.55rem 0.8rem", cursor:"pointer", fontFamily:"var(--font-mono)", fontSize:"0.7rem" }}>
               <Icon size={14} color={active ? item.accent : "currentColor"}/>{item.label}
             </button>;
           })}
         </div>
 
         <div style={{ display:"grid", gridTemplateColumns:"minmax(0,1.1fr) minmax(280px,0.9fr)", gap:"1rem" }} className="recruiter-grid">
-          <article className="glass-card" style={{ padding:"1.5rem", borderTop:`2px solid ${current.accent}` }}>
-            <div style={{ display:"flex", alignItems:"center", gap:"0.6rem", marginBottom:"0.8rem" }}><current.icon size={18} color={current.accent}/><span className="font-sans-title" style={{ color:current.accent }}>{current.label}</span></div>
+          <article className="glass-card" style={{ padding:"1.5rem", borderTop:`2px solid ${palette.accent}`, background:theme === "gallery" ? "rgba(255,255,255,0.66)" : "var(--color-bg-card)" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:"0.6rem", marginBottom:"0.8rem" }}><current.icon size={18} color={palette.accent}/><span className="font-sans-title" style={{ color:palette.highlight }}>{current.label}</span></div>
             <p style={{ margin:"0 0 1.25rem", fontSize:"1rem" }}>{current.summary}</p>
             <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"1rem" }} className="recruiter-detail-grid">
               <div><div className="font-sans-title" style={{ marginBottom:"0.55rem" }}>Core strengths</div>{current.strengths.map((strength) => <div key={strength} style={{ padding:"0.42rem 0", borderTop:"1px solid var(--border-subtle)", color:"var(--color-fg-dim)", fontSize:"0.83rem" }}>{strength}</div>)}</div>
