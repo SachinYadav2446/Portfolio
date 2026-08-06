@@ -1,141 +1,70 @@
 "use client";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Monitor, Sword, AppWindow, FrameIcon, Check } from "lucide-react";
+/* eslint-disable react-hooks/immutability -- HTMLAudioElement playback is intentionally imperative. */
+
+import React, { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Check, Music2, Pause, Play, Volume2, X } from "lucide-react";
 import { useTheme } from "./ThemeContext";
 
 const THEMES = [
-  {
-    id:"ide",     name:"IDE / Editor",          icon:"💻",
-    desc:"VS Code-style developer environment with file tabs, terminal, activity bar, and wine & cream palette.",
-    preview:["#1A1014","#C8506A","#F5ECD7","#C8A96E"],
-    tag:"Default",
-  },
-  {
-    id:"rpg",     name:"RPG Interface",          icon:"⚔️",
-    desc:"Video game character select screen with quest log, achievements, skill tree, and gold & purple palette.",
-    preview:["#0D0D1A","#FFD700","#E8E0FF","#C084FC"],
-    tag:"New",
-  },
-  {
-    id:"os",      name:"Interactive OS",         icon:"🖥️",
-    desc:"macOS-style desktop with draggable & resizable windows, Dock, menu bar, and working terminal.",
-    preview:["#1C2B3A","#0071E3","#ECE9E3","#30D158"],
-    tag:"New",
-  },
-  {
-    id:"gallery", name:"Museum / Gallery",       icon:"🖼️",
-    desc:"High-end editorial archive with Playfair Display typography, exhibit cards, and ink & cream palette.",
-    preview:["#F8F6F1","#1A1A1A","#8B6F47","#3A5F8A"],
-    tag:"New",
-  },
+  { id:"ide", name:"IDE / Editor", desc:"VS Code-style developer environment.", preview:["#1A1014","#C8506A","#F5ECD7","#C8A96E"], tag:"Default" },
+  { id:"rpg", name:"RPG Interface", desc:"Game-inspired quest and achievement view.", preview:["#0D0D1A","#FFD700","#E8E0FF","#C084FC"], tag:"New" },
+  { id:"os", name:"Interactive OS", desc:"Desktop-style workspace with windows and Dock.", preview:["#1C2B3A","#0071E3","#ECE9E3","#30D158"], tag:"New" },
+  { id:"gallery", name:"Museum / Gallery", desc:"Editorial archive with an ink and cream palette.", preview:["#F8F6F1","#1A1A1A","#8B6F47","#3A5F8A"], tag:"New" },
 ];
+const TRACKS = [
+  { id:"healing", title:"Healing Vibes", subtitle:"Soft calm playlist", src:"/music/healing-vibes.mp3" },
+  { id:"evergreen", title:"Evergreen Hindi", subtitle:"Classic Hindi collection", src:"/music/evergreen-hindi.mp3" },
+];
+let sharedMusicPlayer;
+const formatTime = (value) => Number.isFinite(value) ? `${Math.floor(value / 60)}:${String(Math.floor(value % 60)).padStart(2, "0")}` : "0:00";
 
 export default function ThemeSettings({ onClose, audio }) {
   const { theme, setTheme } = useTheme();
   const [selected, setSelected] = useState(theme);
+  const [trackId, setTrackId] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.55);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
 
-  const apply = () => {
-    setTheme(selected);
+  useEffect(() => {
+    if (!sharedMusicPlayer) sharedMusicPlayer = new Audio();
+    const player = sharedMusicPlayer;
+    const sync = () => {
+      setIsPlaying(!player.paused);
+      setProgress(player.currentTime || 0);
+      setDuration(player.duration || 0);
+      setTrackId(TRACKS.find((track) => track.src === player.dataset.track)?.id || null);
+    };
+    ["play", "pause", "timeupdate", "loadedmetadata", "ended"].forEach((event) => player.addEventListener(event, sync));
+    sync();
+    return () => ["play", "pause", "timeupdate", "loadedmetadata", "ended"].forEach((event) => player.removeEventListener(event, sync));
+  }, []);
+
+  const selectTrack = (track) => {
+    const player = sharedMusicPlayer;
+    if (!player) return;
+    if (player.dataset.track !== track.src) { player.src = track.src; player.dataset.track = track.src; player.currentTime = 0; }
+    player.volume = volume;
+    player.play().then(() => { setTrackId(track.id); setIsPlaying(true); }).catch(() => setIsPlaying(false));
     audio?.playClick();
-    onClose();
   };
+  const togglePlayback = () => {
+    const player = sharedMusicPlayer;
+    if (!player) return;
+    if (!player.dataset.track) { selectTrack(TRACKS[0]); return; }
+    if (player.paused) player.play().then(() => setIsPlaying(true)).catch(() => {}); else player.pause();
+    audio?.playClick();
+  };
+  const updateVolume = (value) => { const next = Number(value); setVolume(next); if (sharedMusicPlayer) sharedMusicPlayer.volume = next; };
+  const seek = (value) => { const next = Number(value); if (sharedMusicPlayer) sharedMusicPlayer.currentTime = next; setProgress(next); };
+  const apply = () => { setTheme(selected); audio?.playClick(); onClose(); };
 
-  return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-        style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.72)", zIndex:1000,
-          display:"flex", alignItems:"center", justifyContent:"center", padding:"1rem" }}
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ opacity:0, scale:.94, y:16 }}
-          animate={{ opacity:1, scale:1, y:0 }}
-          exit={{ opacity:0, scale:.94, y:16 }}
-          transition={{ duration:.22 }}
-          onClick={e => e.stopPropagation()}
-          style={{ background:"var(--color-bg-card)", border:"1px solid var(--glass-border-active)",
-            borderRadius:8, width:"100%", maxWidth:600,
-            boxShadow:"0 28px 80px rgba(0,0,0,0.75)", overflow:"hidden" }}
-        >
-          {/* Header */}
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
-            padding:"1rem 1.25rem", background:"var(--color-bg-elevated)", borderBottom:"1px solid var(--border-subtle)" }}>
-            <span style={{ fontFamily:"var(--font-mono)", fontSize:"0.82rem", fontWeight:700, color:"var(--color-cream)" }}>
-              🎨 &nbsp;Color Theme
-            </span>
-            <button onClick={onClose} style={{ background:"none", border:"none", cursor:"pointer",
-              color:"var(--color-comment)", display:"flex", padding:"0.2rem" }}>
-              <X size={15}/>
-            </button>
-          </div>
-
-          {/* Theme cards */}
-          <div style={{ padding:"1rem", display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0.65rem" }}>
-            {THEMES.map(t => (
-              <motion.div key={t.id} whileHover={{ scale:1.02 }}
-                onClick={() => { setSelected(t.id); audio?.playClick(); }}
-                onMouseEnter={() => audio?.playHover()}
-                style={{
-                  background: selected===t.id ? "var(--color-bg-elevated)" : "var(--color-bg-darker)",
-                  border:`2px solid ${selected===t.id ? "var(--glass-border-active)" : "var(--border-subtle)"}`,
-                  borderRadius:6, padding:"0.85rem", cursor:"pointer",
-                  transition:"all .15s",
-                  boxShadow: selected===t.id ? "0 0 12px var(--color-wine-glow)" : "none",
-                  position:"relative",
-                }}>
-                {/* Swatches */}
-                <div style={{ display:"flex", gap:3, marginBottom:"0.65rem" }}>
-                  {t.preview.map((c,i) => (
-                    <div key={i} style={{ width:16, height:16, borderRadius:3, background:c, border:"1px solid rgba(0,0,0,0.1)" }}/>
-                  ))}
-                  {theme===t.id && (
-                    <span style={{ marginLeft:"auto", fontFamily:"var(--font-mono)", fontSize:"0.55rem", color:"var(--color-sage)",
-                      display:"flex", alignItems:"center", gap:2 }}><Check size={9}/>Active</span>
-                  )}
-                </div>
-                {/* Info */}
-                <div style={{ display:"flex", alignItems:"center", gap:"0.4rem", marginBottom:"0.35rem" }}>
-                  <span style={{ fontSize:"0.9rem" }}>{t.icon}</span>
-                  <span style={{ fontFamily:"var(--font-mono)", fontSize:"0.75rem", fontWeight:700, color:"var(--color-cream)" }}>{t.name}</span>
-                  {t.tag !== "Default" && (
-                    <span style={{ fontFamily:"var(--font-mono)", fontSize:"0.55rem", fontWeight:700,
-                      background:"var(--color-wine-dim)", border:"1px solid var(--glass-border-active)",
-                      color:"var(--color-wine)", padding:"0.05rem 0.3rem", borderRadius:3, marginLeft:"auto" }}>{t.tag}</span>
-                  )}
-                </div>
-                <p style={{ fontFamily:"var(--font-mono)", fontSize:"0.65rem", color:"var(--color-cream-muted)", margin:0, lineHeight:1.5 }}>
-                  {t.desc}
-                </p>
-                {selected===t.id && (
-                  <div style={{ position:"absolute", top:8, right:8, width:16, height:16, borderRadius:"50%",
-                    background:"var(--color-wine)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                    <Check size={9} color="var(--color-bg)"/>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Footer */}
-          <div style={{ padding:"0.75rem 1.25rem", borderTop:"1px solid var(--border-subtle)",
-            display:"flex", justifyContent:"flex-end", gap:"0.6rem", background:"var(--color-bg-elevated)" }}>
-            <button onClick={onClose}
-              style={{ fontFamily:"var(--font-mono)", fontSize:"0.72rem", background:"none",
-                border:"1px solid var(--border-subtle)", color:"var(--color-comment)",
-                padding:"0.4rem 0.9rem", borderRadius:4, cursor:"pointer" }}
-              onMouseEnter={() => audio?.playHover()}>
-              Cancel
-            </button>
-            <button onClick={apply} className="btn-primary"
-              style={{ padding:"0.4rem 1.1rem", fontSize:"0.72rem" }}
-              onMouseEnter={() => audio?.playHover()}>
-              Apply Theme
-            </button>
-          </div>
-        </motion.div>
-      </motion.div>
-    </AnimatePresence>
-  );
+  return <AnimatePresence><motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }} onClick={onClose} style={{ position:"fixed", inset:0, zIndex:1000, background:"rgba(0,0,0,0.72)", display:"flex", alignItems:"center", justifyContent:"center", padding:"1rem" }}><motion.div initial={{ opacity:0, scale:.94, y:16 }} animate={{ opacity:1, scale:1, y:0 }} exit={{ opacity:0, scale:.94, y:16 }} transition={{ duration:.22 }} onClick={(event) => event.stopPropagation()} style={{ background:"var(--color-bg-card)", border:"1px solid var(--glass-border-active)", borderRadius:8, width:"min(600px, 100%)", maxHeight:"90vh", overflow:"auto", boxShadow:"0 28px 80px rgba(0,0,0,0.75)" }}>
+    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"1rem 1.25rem", background:"var(--color-bg-elevated)", borderBottom:"1px solid var(--border-subtle)" }}><span style={{ fontFamily:"var(--font-mono)", fontSize:"0.82rem", fontWeight:700, color:"var(--color-cream)" }}>Theme & Music Settings</span><button aria-label="Close settings" onClick={onClose} style={{ background:"none", border:0, cursor:"pointer", color:"var(--color-comment)", display:"flex", padding:"0.2rem" }}><X size={15}/></button></div>
+    <div style={{ padding:"1rem", display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0.65rem" }} className="theme-grid">{THEMES.map((item) => <motion.button key={item.id} whileHover={{ scale:1.02 }} onClick={() => { setSelected(item.id); audio?.playClick(); }} onMouseEnter={() => audio?.playHover()} style={{ textAlign:"left", background:selected === item.id ? "var(--color-bg-elevated)" : "var(--color-bg-darker)", border:`2px solid ${selected === item.id ? "var(--glass-border-active)" : "var(--border-subtle)"}`, borderRadius:6, padding:"0.85rem", cursor:"pointer", position:"relative" }}><div style={{ display:"flex", gap:3, marginBottom:"0.65rem" }}>{item.preview.map((color) => <span key={color} style={{ width:16, height:16, borderRadius:3, background:color }}/>)}</div><span style={{ display:"block", fontFamily:"var(--font-mono)", fontSize:"0.75rem", fontWeight:700, color:"var(--color-cream)" }}>{item.name}</span><span style={{ display:"block", marginTop:"0.35rem", fontFamily:"var(--font-mono)", fontSize:"0.63rem", color:"var(--color-cream-muted)", lineHeight:1.45 }}>{item.desc}</span>{selected === item.id && <span style={{ position:"absolute", top:8, right:8, color:"var(--color-wine)" }}><Check size={14}/></span>}</motion.button>)}</div>
+    <div style={{ margin:"0 1rem 1rem", padding:"1rem", background:"var(--color-bg-darker)", border:"1px solid var(--border-subtle)", borderRadius:6 }}><div style={{ display:"flex", alignItems:"center", gap:"0.45rem", marginBottom:"0.35rem" }}><Music2 size={15} color="var(--color-rose)"/><span style={{ fontFamily:"var(--font-mono)", fontSize:"0.75rem", fontWeight:700, color:"var(--color-cream)" }}>Drive Radio</span><span style={{ marginLeft:"auto", fontFamily:"var(--font-mono)", fontSize:"0.56rem", color:"var(--color-comment)" }}>OFF BY DEFAULT</span></div><p style={{ margin:"0 0 0.75rem", fontFamily:"var(--font-mono)", fontSize:"0.63rem", color:"var(--color-cream-muted)", lineHeight:1.5 }}>Select a song only if you want background music. It continues while you explore.</p><div style={{ display:"grid", gap:"0.4rem" }}>{TRACKS.map((track) => <button key={track.id} onClick={() => selectTrack(track)} onMouseEnter={() => audio?.playHover()} style={{ textAlign:"left", display:"flex", alignItems:"center", gap:"0.55rem", cursor:"pointer", padding:"0.55rem 0.65rem", border:`1px solid ${trackId === track.id ? "var(--glass-border-active)" : "var(--border-subtle)"}`, borderRadius:4, background:trackId === track.id ? "var(--color-bg-elevated)" : "transparent", color:"var(--color-cream)" }}><Music2 size={14} color={trackId === track.id ? "var(--color-rose)" : "var(--color-comment)"}/><span style={{ minWidth:0, flex:1 }}><span style={{ display:"block", fontFamily:"var(--font-mono)", fontSize:"0.68rem", fontWeight:700 }}>{track.title}</span><span style={{ display:"block", fontFamily:"var(--font-mono)", fontSize:"0.58rem", color:"var(--color-comment)", marginTop:2 }}>{track.subtitle}</span></span>{trackId === track.id && (isPlaying ? <Pause size={13} color="var(--color-rose)"/> : <Play size={13} color="var(--color-rose)"/>)}</button>)}</div>{trackId && <div style={{ marginTop:"0.75rem", paddingTop:"0.7rem", borderTop:"1px solid var(--border-subtle)" }}><div style={{ display:"flex", alignItems:"center", gap:"0.55rem" }}><button onClick={togglePlayback} aria-label={isPlaying ? "Pause song" : "Play song"} style={{ border:"1px solid var(--glass-border-active)", borderRadius:4, padding:"0.38rem", background:"var(--color-wine-dim)", color:"var(--color-cream)", cursor:"pointer", display:"grid", placeItems:"center" }}>{isPlaying ? <Pause size={14}/> : <Play size={14}/>}</button><input aria-label="Song progress" type="range" min="0" max={duration || 0} step="1" value={Math.min(progress, duration || 0)} onChange={(event) => seek(event.target.value)} style={{ flex:1, accentColor:"var(--color-wine)" }}/><span style={{ width:68, textAlign:"right", fontFamily:"var(--font-mono)", fontSize:"0.57rem", color:"var(--color-comment)" }}>{formatTime(progress)} / {formatTime(duration)}</span></div><div style={{ display:"flex", alignItems:"center", gap:"0.55rem", marginTop:"0.55rem" }}><Volume2 size={13} color="var(--color-comment)"/><input aria-label="Music volume" type="range" min="0" max="1" step="0.01" value={volume} onChange={(event) => updateVolume(event.target.value)} style={{ flex:1, accentColor:"var(--color-rose)" }}/><span style={{ width:30, fontFamily:"var(--font-mono)", fontSize:"0.57rem", color:"var(--color-comment)" }}>{Math.round(volume * 100)}%</span></div></div>}</div>
+    <div style={{ padding:"0.75rem 1.25rem", borderTop:"1px solid var(--border-subtle)", display:"flex", justifyContent:"flex-end", gap:"0.6rem", background:"var(--color-bg-elevated)" }}><button onClick={onClose} style={{ fontFamily:"var(--font-mono)", fontSize:"0.72rem", background:"none", border:"1px solid var(--border-subtle)", color:"var(--color-comment)", padding:"0.4rem 0.9rem", borderRadius:4, cursor:"pointer" }}>Cancel</button><button onClick={apply} className="btn-primary" style={{ padding:"0.4rem 1.1rem", fontSize:"0.72rem" }}>Apply Theme</button></div>
+  </motion.div></motion.div></AnimatePresence>;
 }
