@@ -13,6 +13,8 @@ const IDE_TABS = [
   { name: "recruiter.md",      href: "#recruiter",       icon: "[R]" },
   { name: "pull-requests.md",  href: "#pull-requests",   icon: "[P]" },
   { name: "commit-story.log",  href: "#commit-story",    icon: "[C]" },
+  { name: "passport.md",       href: "#passport",        icon: "[S]" },
+  { name: "failure-museum.md", href: "#failure-museum",  icon: "[F]" },
   { name: "notes.md",          href: "#notes",           icon: "[N]" },
   { name: "contact.tsx",       href: "#contact",         icon: "[+]" },
 ];

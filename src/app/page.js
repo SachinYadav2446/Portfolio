@@ -19,11 +19,13 @@ const CreativeHero = dynamic(() => import("@/components/CreativeHero"), {
     </div>
   ),
 });
-const CommitStory       = dynamic(() => import("@/components/CommitStory"),       { ssr: false });
 
 const PullRequests      = dynamic(() => import("@/components/PullRequests"),      { ssr: false });
+const CommitStory       = dynamic(() => import("@/components/CommitStory"),       { ssr: false });
 const RecruiterMode      = dynamic(() => import("@/components/RecruiterMode"),      { ssr: false });
 const ExperienceMap      = dynamic(() => import("@/components/ExperienceMap"),      { ssr: false });
+const EngineeringPassport = dynamic(() => import("@/components/EngineeringPassport"), { ssr: false });
+const FailureMuseum      = dynamic(() => import("@/components/FailureMuseum"),      { ssr: false });
 const EngineeringNotes   = dynamic(() => import("@/components/EngineeringNotes"),   { ssr: false });
 
 export default function Home() {
@@ -43,8 +45,10 @@ export default function Home() {
         <RecruiterMode audio={audio} />
 
         <PullRequests audio={audio} />
-
         <CommitStory audio={audio} />
+        <EngineeringPassport audio={audio} />
+        <FailureMuseum audio={audio} />
+
 
         <EngineeringNotes audio={audio} />
 
