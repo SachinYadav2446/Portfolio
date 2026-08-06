@@ -12,97 +12,56 @@ import {
 /* ═══════════════════════════════════════════════════════════
    CONSTANTS
 ═══════════════════════════════════════════════════════════ */
+const codeLines = (lines) => lines.map((line) => line ? [{ t: "plain", v: line }] : []);
+
 const FILES = {
-  "index.ts": {
-    lang: "TypeScript", ext: "ts",
-    lines: [
-      [{ t:"comment", v:"// sachin-yadav/portfolio — index.ts" }],
-      [],
-      [{ t:"keyword",v:"import" },{ t:"plain",v:" { " },{ t:"variable",v:"Engineer" },{ t:"plain",v:" } " },{ t:"keyword",v:"from" },{ t:"string",v:' "life"' }],
-      [],
-      [{ t:"keyword",v:"const" },{ t:"plain",v:" " },{ t:"variable",v:"me" },{ t:"plain",v:" = {" }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"name" },{ t:"plain",v:":       " },{ t:"string",v:'"Sachin Yadav"' },{ t:"plain",v:"," }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"role" },{ t:"plain",v:":       " },{ t:"string",v:'"Full-Stack & ML Engineer"' },{ t:"plain",v:"," }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"year" },{ t:"plain",v:":       " },{ t:"number",v:"2" },{ t:"comment",v:", // CS undergrad" }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"location" },{ t:"plain",v:":   " },{ t:"string",v:'"Bangalore, India"' },{ t:"plain",v:"," }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"available" },{ t:"plain",v:":  " },{ t:"keyword",v:"true" },{ t:"comment",v:", // for internships" }],
-      [],
-      [{ t:"plain",v:"  " },{ t:"function",v:"stack" },{ t:"plain",v:":      [" }],
-      [{ t:"plain",v:'    ' },{ t:"string",v:'"Python"' },{ t:"plain",v:", " },{ t:"string",v:'"Golang"' },{ t:"plain",v:", " },{ t:"string",v:'"Java"' },{ t:"plain",v:"," }],
-      [{ t:"plain",v:'    ' },{ t:"string",v:'"Node.js"' },{ t:"plain",v:", " },{ t:"string",v:'"React"' },{ t:"plain",v:", " },{ t:"string",v:'"Next.js"' },{ t:"plain",v:"," }],
-      [{ t:"plain",v:'    ' },{ t:"string",v:'"FastAPI"' },{ t:"plain",v:", " },{ t:"string",v:'"PyTorch"' },{ t:"plain",v:", " },{ t:"string",v:'"SQL"' }],
-      [{ t:"plain",v:"  ]," }],
-      [],
-      [{ t:"plain",v:"  " },{ t:"function",v:"interests" },{ t:"plain",v:": [" }],
-      [{ t:"plain",v:'    ' },{ t:"string",v:'"System Design"' },{ t:"plain",v:", " },{ t:"string",v:'"ML Pipelines"' },{ t:"plain",v:"," }],
-      [{ t:"plain",v:'    ' },{ t:"string",v:'"Real-Time Systems"' },{ t:"plain",v:", " },{ t:"string",v:'"WebGL / 3D"' }],
-      [{ t:"plain",v:"  ]" }],
-      [{ t:"plain",v:"};" }],
-      [],
-      [{ t:"keyword",v:"export default" },{ t:"plain",v:" " },{ t:"variable",v:"me" },{ t:"plain",v:";" }],
-    ],
-  },
-  "about.md": {
-    lang: "Markdown", ext: "md",
-    lines: [
-      [{ t:"keyword",v:"# About Me" }],
-      [],
-      [{ t:"plain",v:"2nd-year CS student @ Bangalore." }],
-      [{ t:"plain",v:"Building full-stack apps, ML pipelines," }],
-      [{ t:"plain",v:"and real-time systems." }],
-      [],
-      [{ t:"keyword",v:"## Skills" }],
-      [],
-      [{ t:"string",v:"- " },{ t:"plain",v:"Python · Golang · Java · Node.js" }],
-      [{ t:"string",v:"- " },{ t:"plain",v:"React · Next.js · Three.js" }],
-      [{ t:"string",v:"- " },{ t:"plain",v:"FastAPI · PostgreSQL · MongoDB" }],
-      [{ t:"string",v:"- " },{ t:"plain",v:"PyTorch · NumPy · Pandas" }],
-      [],
-      [{ t:"keyword",v:"## Contact" }],
-      [],
-      [{ t:"variable",v:"📧 " },{ t:"plain",v:"yadavsachin2446@gmail.com" }],
-      [{ t:"variable",v:"📍 " },{ t:"plain",v:"Bangalore, India" }],
-    ],
-  },
-  "projects.ts": {
-    lang: "TypeScript", ext: "ts",
-    lines: [
-      [{ t:"keyword",v:"interface" },{ t:"plain",v:" " },{ t:"class",v:"Project" },{ t:"plain",v:" {" }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"title" },{ t:"plain",v:": string;" }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"stack" },{ t:"plain",v:": string[];" }],
-      [{ t:"plain",v:"  " },{ t:"function",v:"live" },{ t:"plain",v:"?:  string;" }],
-      [{ t:"plain",v:"}" }],
-      [],
-      [{ t:"keyword",v:"const" },{ t:"plain",v:" " },{ t:"variable",v:"projects" },{ t:"plain",v:": Project[] = [" }],
-      [{ t:"plain",v:"  { " },{ t:"function",v:"title" },{ t:"plain",v:": " },{ t:"string",v:'"Bright Code"' },{ t:"plain",v:", " }],
-      [{ t:"plain",v:"    " },{ t:"function",v:"stack" },{ t:"plain",v:": [" },{ t:"string",v:'"React"' },{ t:"plain",v:"," },{ t:"string",v:'"Socket.IO"' },{ t:"plain",v:"] }," }],
-      [{ t:"plain",v:"  { " },{ t:"function",v:"title" },{ t:"plain",v:": " },{ t:"string",v:'"DemandSight"' },{ t:"plain",v:", " }],
-      [{ t:"plain",v:"    " },{ t:"function",v:"stack" },{ t:"plain",v:": [" },{ t:"string",v:'"FastAPI"' },{ t:"plain",v:"," },{ t:"string",v:'"Leaflet"' },{ t:"plain",v:"] }," }],
-      [{ t:"plain",v:"  { " },{ t:"function",v:"title" },{ t:"plain",v:": " },{ t:"string",v:'"Creatify"' },{ t:"plain",v:", " }],
-      [{ t:"plain",v:"    " },{ t:"function",v:"stack" },{ t:"plain",v:": [" },{ t:"string",v:'"React 18"' },{ t:"plain",v:"," },{ t:"string",v:'"PostgreSQL"' },{ t:"plain",v:"] }," }],
-      [{ t:"plain",v:"];" }],
-    ],
-  },
-  "contact.tsx": {
-    lang: "TSX", ext: "tsx",
-    lines: [
-      [{ t:"keyword",v:"export" },{ t:"plain",v:" " },{ t:"keyword",v:"function" },{ t:"plain",v:" " },{ t:"function",v:"Contact" },{ t:"plain",v:"() {" }],
-      [{ t:"plain",v:"  " },{ t:"keyword",v:"return" },{ t:"plain",v:" (" }],
-      [{ t:"plain",v:"    <" },{ t:"class",v:"section" },{ t:"plain",v:">" }],
-      [{ t:"plain",v:"      <" },{ t:"class",v:"h2" },{ t:"plain",v:">" },{ t:"string",v:"Let's Build Something Cool" },{ t:"plain",v:"</" },{ t:"class",v:"h2" },{ t:"plain",v:">" }],
-      [{ t:"plain",v:"      <" },{ t:"class",v:"a" },{ t:"plain",v:" " },{ t:"function",v:"href" },{ t:"plain",v:"=" },{ t:"string",v:'"mailto:yadavsachin2446@gmail.com"' },{ t:"plain",v:">" }],
-      [{ t:"plain",v:"        " },{ t:"string",v:"yadavsachin2446@gmail.com" }],
-      [{ t:"plain",v:"      </" },{ t:"class",v:"a" },{ t:"plain",v:">" }],
-      [{ t:"plain",v:"    </" },{ t:"class",v:"section" },{ t:"plain",v:">" }],
-      [{ t:"plain",v:"  );" }],
-      [{ t:"plain",v:"}" }],
-    ],
-  },
+  "index.ts": { lang: "TypeScript", ext: "ts", lines: codeLines([
+    "export const profile = {", '  name: "Sachin Yadav",', '  role: "Full-stack and machine learning engineer",', '  location: "Bangalore, India",', '  availability: "Open to internships",', "};", "", "export default profile;",
+  ]) },
+  "skills.ts": { lang: "TypeScript", ext: "ts", lines: codeLines([
+    "export const skills = {",
+    "  frontend: [",
+    '    "JavaScript", "TypeScript", "HTML5", "CSS3",',
+    '    "Tailwind CSS", "React.js", "Next.js",',
+    "  ],",
+    "  backend: [",
+    '    "Node.js", "Spring Boot", "FastAPI", "REST APIs",',
+    "  ],",
+    "  databases: [",
+    '    "MongoDB", "PostgreSQL", "SQL", "AWS RDS",',
+    "  ],",
+    "  languages: [",
+    '    "Python", "Java", "JavaScript", "Golang",',
+    "  ],",
+    "  dataAndML: [",
+    '    "NumPy", "Pandas", "Seaborn", "Matplotlib",',
+    '    "Supervised Learning", "Unsupervised Learning",',
+    '    "Time Series Forecasting",',
+    "  ],",
+    "  cloudAndTools: [",
+    '    "GitHub", "AWS", "AWS RDS", "AWS Amplify",',
+    '    "Netlify", "Render", "Railway", "AWS CloudShell", "EC2",',
+    "  ],",
+    "  computerScience: [",
+    '    "Computer Architecture", "DBMS", "DSA",',
+    '    "Operating Systems", "Computer Networks",',
+    '    "Object-Oriented Programming", "System Design",',
+    "  ],",
+    "};",
+    "",
+    "export default skills;",
+  ]) },
+  "projects.ts": { lang: "TypeScript", ext: "ts", lines: codeLines([
+    "export const projectCards = [", '  { name: "Run-Rate Forecaster", stack: "Python / Forecasting" },', '  { name: "DemandSight", stack: "React / FastAPI / ML" },', '  { name: "BrightCode", stack: "React / Socket.IO" },', '  { name: "Creatify", stack: "React / PostgreSQL" },', "];", "", "export default projectCards;",
+  ]) },
+  "contact.tsx": { lang: "TSX", ext: "tsx", lines: codeLines([
+    "export function ContactForm() {", "  return (", "    <form>", '      <input name="subject" placeholder="Subject" required />', '      <textarea name="message" placeholder="Message" required />', '      <button type="submit">Open email draft</button>', "    </form>", "  );", "}",
+  ]) },
 };
 
 const PROBLEMS = [
   { sev:"warn",  file:"index.ts",    line:9,  msg:"'location' could be more specific — consider adding city district" },
-  { sev:"info",  file:"about.md",    line:1,  msg:"README looks great! Add a banner image for more impact" },
+  { sev:"info",  file:"skills.ts",   line:1,  msg:"Skill inventory compiled successfully" },
   { sev:"warn",  file:"projects.ts", line:8,  msg:"Missing 'description' field in Project interface" },
 ];
 
@@ -110,7 +69,7 @@ const TREE = [
   { id:"src",          type:"folder", name:"src",           depth:0, open:true  },
   { id:"index.ts",     type:"file",   name:"index.ts",      depth:1, ext:"ts",   parent:"src" },
   { id:"pages",        type:"folder", name:"pages",         depth:1, open:true,  parent:"src" },
-  { id:"about.md",     type:"file",   name:"about.md",      depth:2, ext:"md",   parent:"pages" },
+  { id:"skills.ts",    type:"file",   name:"skills.ts",     depth:2, ext:"ts",   parent:"pages" },
   { id:"projects.ts",  type:"file",   name:"projects.ts",   depth:2, ext:"ts",   parent:"pages" },
   { id:"contact.tsx",  type:"file",   name:"contact.tsx",   depth:2, ext:"tsx",  parent:"pages" },
   { id:"components",   type:"folder", name:"components",    depth:1, open:false, parent:"src" },
@@ -628,8 +587,8 @@ const OUTLINES = {
     { kind:"string[]", name:"stack",     color:"var(--color-sky)"   },
     { kind:"string[]", name:"interests", color:"var(--color-sky)"   },
   ],
-  "about.md":   [
-    { kind:"h1", name:"About Me",  color:"var(--color-wine)" },
+  "skills.ts":  [
+    { kind:"h1", name:"Skills",  color:"var(--color-wine)" },
     { kind:"h2", name:"Skills",    color:"var(--color-rose)" },
     { kind:"h2", name:"Contact",   color:"var(--color-rose)" },
   ],
@@ -773,7 +732,7 @@ function SearchSidebar({ audio, onFileClick }) {
 ═══════════════════════════════════════════════════════════ */
 const GIT_CHANGES = [
   { status:"M", file:"src/index.ts",      staged:true  },
-  { status:"M", file:"src/pages/about.md",staged:true  },
+  { status:"M", file:"src/pages/skills.ts",staged:true  },
   { status:"A", file:"src/components/ExtensionMarketplace.js", staged:true },
   { status:"A", file:"src/components/PullRequests.js",         staged:true },
   { status:"A", file:"src/components/DebugPanel.js",           staged:false },
@@ -1210,9 +1169,7 @@ export default function CreativeHero({ audio }) {
                   transition={{ duration:.15 }}
                   style={{ height:"100%" }}
                 >
-                  {bottomPanel === "terminal"
-                    ? <InteractiveTerminal audio={audio} />
-                    : <ProblemsPanel audio={audio} />}
+                  {bottomPanel === "terminal" ? <InteractiveTerminal audio={audio} /> : <ProblemsPanel audio={audio} />}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -1259,7 +1216,7 @@ export default function CreativeHero({ audio }) {
                     <div style={{ padding:"0.3rem 0.75rem", fontFamily:"var(--font-mono)", fontSize:"0.6rem", color:"var(--color-comment)", textTransform:"uppercase", letterSpacing:"0.08em", borderBottom:"1px solid var(--border-subtle)", marginBottom:"0.25rem" }}>Quick Nav</div>
                     {[
                       { href:"#projects", label:"projects.ts →", color:"var(--color-rose)" },
-                      { href:"#about",    label:"about.md →",    color:"var(--color-gold)"  },
+                      { href:"#home",     label:"skills.ts →",   color:"var(--color-gold)"  },
                       { href:"#contact",  label:"contact.tsx →", color:"var(--color-sage)"  },
                       { href:"https://github.com/SachinYadav2446", label:"github →", color:"var(--color-sky)", ext:true },
                     ].map(l => (
