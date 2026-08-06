@@ -185,7 +185,7 @@ export default function About({ audio }) {
             }}
           >
             <p style={{ margin: 0, color: "var(--color-fg-dim)", fontStyle: "italic", fontSize: "0.92rem" }}>
-              "I bridge rigorous systems architecture with high-performance interactive interfaces."
+              &quot;I bridge rigorous systems architecture with high-performance interactive interfaces.&quot;
             </p>
           </div>
 

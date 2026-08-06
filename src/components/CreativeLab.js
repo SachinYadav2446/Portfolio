@@ -265,7 +265,7 @@ const wireframe = false;   // true | false`;
           <BinaryHeading text="Bright Code Compiler" style={{ fontSize: "clamp(2.3rem, 5vw, 3.2rem)", marginTop: "0.5rem", justifyContent: "center" }} className="text-glow-cream" />
           <div className="accent-bar" style={{ margin: "1rem auto 0 auto" }}></div>
           <p style={{ maxWidth: "650px", margin: "1.5rem auto 0 auto", color: "var(--color-cream-dim)", fontSize: "0.95rem", lineHeight: "1.6" }}>
-            A real-time workspace simulator based on Sachin's collaborative editor project **BrightCode**. Edit the Javascript variables inside the code editor pane to compile and morph the WebGL parameters live.
+            A real-time workspace simulator based on Sachin&apos;s collaborative editor project **BrightCode**. Edit the Javascript variables inside the code editor pane to compile and morph the WebGL parameters live.
           </p>
         </div>
 

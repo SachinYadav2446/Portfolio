@@ -189,7 +189,7 @@ export default function GalleryHome({ audio }) {
       <section id="about" style={{ padding:"4rem", borderBottom:"1px solid rgba(26,26,26,0.08)" }}>
         <div style={{ maxWidth:900, margin:"0 auto", display:"grid", gridTemplateColumns:"1fr 2fr", gap:"4rem", alignItems:"start" }} className="gallery-about-grid">
           <div>
-            <div className="gallery-label" style={{ marginBottom:"1rem" }}>Curator's Note</div>
+            <div className="gallery-label" style={{ marginBottom:"1rem" }}>Curator&apos;s Note</div>
             <div style={{ width:40, height:2, background:"var(--color-cream)", marginBottom:"1.5rem" }}/>
             <div className="gallery-exhibit-num">Sachin Yadav<br/>2nd Year CS · Bangalore<br/>yadavsachin2446@gmail.com</div>
           </div>
@@ -272,7 +272,7 @@ export default function GalleryHome({ audio }) {
         <div style={{ maxWidth:700, margin:"0 auto", textAlign:"center" }}>
           <div className="gallery-label" style={{ marginBottom:"1rem" }}>Open to Commissions</div>
           <h2 style={{ fontSize:"clamp(2rem,5vw,4rem)", fontFamily:"'Playfair Display', serif", fontWeight:900, letterSpacing:"-0.03em", color:"var(--color-cream)", marginBottom:"1.5rem", lineHeight:1.1 }}>
-            Let's Build<br/><em style={{ fontStyle:"italic", fontWeight:400 }}>Something Real</em>
+            Let&apos;s Build<br/><em style={{ fontStyle:"italic", fontWeight:400 }}>Something Real</em>
           </h2>
           <p style={{ fontSize:"0.95rem", color:"var(--color-cream-muted)", fontFamily:"'Playfair Display', serif", lineHeight:1.75, marginBottom:"2.5rem" }}>
             Seeking software engineering internships and collaborative projects in full-stack engineering, ML systems, or creative technology. Bangalore-based, globally curious.

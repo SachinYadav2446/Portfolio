@@ -216,7 +216,7 @@ function ContactContent({ audio }) {
   return (
     <div style={{ padding:"1.5rem" }}>
       <p style={{ fontSize:"0.82rem", color:"#3D3D3F", marginBottom:"1.25rem", lineHeight:1.6 }}>
-        Open to software engineering internships and open-source collaborations. Let's build something together.
+        Open to software engineering internships and open-source collaborations. Let&apos;s build something together.
       </p>
       {links.map(l => (
         <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer"

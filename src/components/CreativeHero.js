@@ -738,7 +738,7 @@ function SearchSidebar({ audio, onFileClick }) {
         {q && <button onClick={() => setQ("")} style={{ background:"none", border:"none", cursor:"pointer", color:"var(--color-comment)", padding:0, display:"flex" }}><X size={9}/></button>}
       </div>
       {q.length > 1 && results.length === 0 && (
-        <div style={{ color:"var(--color-comment)", padding:"0.5rem", fontSize:"0.65rem" }}>No results for "{q}"</div>
+        <div style={{ color:"var(--color-comment)", padding:"0.5rem", fontSize:"0.65rem" }}>No results for &quot;{q}&quot;</div>
       )}
       {results.map(r => (
         <div key={r.file}>
