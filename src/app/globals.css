@@ -1087,6 +1087,23 @@ section {
   --color-pink:           var(--color-wine);
   --color-purple:         var(--color-rose);
   --color-cyan:           var(--color-sky);
+/* Commit Story Mode */
+.commit-story-grid { display:grid; grid-template-columns:minmax(0, 1.45fr) minmax(300px, .8fr); border:1px solid var(--border-subtle); background:var(--color-bg-card); }
+.commit-stage { padding:1.35rem 1.5rem; min-height:385px; border-right:1px solid var(--border-subtle); }
+.commit-timeline { max-height:430px; overflow:auto; padding:.55rem; background:var(--color-bg-darker); }
+.commit-play, .commit-nav { border:1px solid var(--glass-border-active); background:var(--color-wine-dim); color:var(--color-cream); font:700 .65rem var(--font-mono); letter-spacing:.05em; cursor:pointer; display:inline-flex; align-items:center; gap:.35rem; padding:.45rem .65rem; }
+.commit-nav { color:var(--color-cream-dim); border-color:transparent; background:transparent; }
+.commit-play:hover, .commit-nav:hover { background:var(--color-bg-elevated); color:var(--color-cream); }
+.commit-chip { display:inline-flex; align-items:center; gap:.3rem; padding:.3rem .45rem; color:var(--color-cream-muted); border:1px solid var(--border-subtle); background:var(--color-bg-darker); }
+.commit-link { display:inline-flex; align-items:center; gap:.4rem; margin-top:1.1rem; color:var(--color-rose); font:700 .7rem var(--font-mono); text-decoration:none; }
+.commit-link:hover { color:var(--color-cream); }
+.commit-beat { width:100%; border:0; background:transparent; color:var(--color-cream-dim); display:flex; align-items:center; gap:.65rem; padding:.7rem .55rem; cursor:pointer; border-left:2px solid transparent; }
+.commit-beat:hover, .commit-beat.active { background:var(--color-bg-selection); border-left-color:var(--beat-color, var(--color-wine)); }
+.commit-rail { width:25px; height:25px; flex:0 0 auto; display:grid; place-items:center; color:var(--beat-color); border:1px solid var(--beat-color); border-radius:50%; }
+.commit-beat-title, .commit-beat-meta { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.commit-beat-title { font:.69rem var(--font-mono); color:var(--color-cream-dim); }
+.commit-beat-meta { font:.58rem var(--font-mono); color:var(--color-comment); margin-top:.25rem; }
+@media (max-width: 760px) { .commit-story-grid { grid-template-columns:1fr; } .commit-stage { border-right:0; border-bottom:1px solid var(--border-subtle); padding:1rem; } .commit-timeline { max-height:330px; } }
   --color-green:          var(--color-sage);
   --color-orange:         var(--color-amber);
   --color-yellow:         var(--color-gold);

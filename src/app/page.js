@@ -19,6 +19,7 @@ const CreativeHero = dynamic(() => import("@/components/CreativeHero"), {
     </div>
   ),
 });
+const CommitStory       = dynamic(() => import("@/components/CommitStory"),       { ssr: false });
 
 const PullRequests      = dynamic(() => import("@/components/PullRequests"),      { ssr: false });
 const RecruiterMode      = dynamic(() => import("@/components/RecruiterMode"),      { ssr: false });
@@ -43,6 +44,7 @@ export default function Home() {
 
         <PullRequests audio={audio} />
 
+        <CommitStory audio={audio} />
 
         <EngineeringNotes audio={audio} />
 
