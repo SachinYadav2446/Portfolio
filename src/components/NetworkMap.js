@@ -187,7 +187,7 @@ export default function NetworkMap({ audio }) {
         <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginTop: "0.5rem", color: "var(--color-fg)" }}>Skill Node Map</h2>
         <div className="accent-bar"></div>
         <p style={{ color: "var(--color-fg-muted)", fontSize: "0.9rem", maxWidth: "650px", lineHeight: "1.6", fontFamily: "var(--font-mono)" }}>
-          <span style={{ color: "var(--color-comment)" }}>// </span>Hover any node to highlight its dependency connections.
+          <span style={{ color: "var(--color-comment)" }}>{"// "}</span>Hover any node to highlight its dependency connections.
         </p>
       </div>
 

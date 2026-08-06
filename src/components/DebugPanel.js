@@ -133,7 +133,7 @@ function TreeNode({ node, depth = 0, audio }) {
         </span>
         {/* Description hint */}
         {node.desc && !open && (
-          <span style={{ color:"var(--color-comment)", fontSize:"0.62rem", fontStyle:"italic", marginLeft:"0.5rem" }}> // {node.desc}</span>
+          <span style={{ color:"var(--color-comment)", fontSize:"0.62rem", fontStyle:"italic", marginLeft:"0.5rem" }}>{"// "}{node.desc}</span>
         )}
       </div>
 

@@ -456,7 +456,7 @@ export default function Projects({ audio }) {
               <div className="code-block" style={{ marginBottom: "2rem" }}>
                 <div className="code-line">
                   <span className="line-number">1</span>
-                  <span className="token-comment">/**</span>
+                  <span className="token-comment">{"/*" + "*"}</span>
                 </div>
                 <div className="code-line">
                   <span className="line-number">2</span>
@@ -499,7 +499,7 @@ export default function Projects({ audio }) {
                     }}
                   >
                     <Terminal size={11} />
-                    <span>// Description</span>
+                    <span>{"// Description"}</span>
                   </div>
                   <p
                     style={{

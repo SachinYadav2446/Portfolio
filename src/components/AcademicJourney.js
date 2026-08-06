@@ -255,7 +255,7 @@ function CommitRow({ commit, audio }) {
                 marginLeft: "1rem",
               }}
             >
-              <span style={{ color: "var(--color-comment)" }}>// </span>
+              <span style={{ color: "var(--color-comment)" }}>{"// "}</span>
               {commit.detail}
             </div>
           </motion.div>
