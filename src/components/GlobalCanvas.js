@@ -29,8 +29,8 @@ function Particles({ count = 800 }) {
       pos[i * 3 + 1] = Math.sin(angle) * radius;
       pos[i * 3 + 2] = (Math.random() - 0.5) * 35; // Very deep depth span
 
-      // Color distribution: 85% Cream, 15% Red
-      const isRed = Math.random() < 0.15;
+      // Color distribution: 80% fg-dim, 20% purple
+      const isRed = Math.random() < 0.20;
       const color = isRed ? redColor : creamColor;
       cols[i * 3] = color.r;
       cols[i * 3 + 1] = color.g;
@@ -92,7 +92,7 @@ function Particles({ count = 800 }) {
         size={0.15}
         vertexColors
         transparent
-        opacity={0.45}
+        opacity={0.25}
         sizeAttenuation={true}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
