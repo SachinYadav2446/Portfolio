@@ -17,8 +17,8 @@ function Particles({ count = 800 }) {
     const cols = new Float32Array(count * 3);
     const szs = new Float32Array(count);
 
-    const creamColor = new THREE.Color("#FFFDF9");
-    const redColor = new THREE.Color("#E63946");
+    const creamColor = new THREE.Color("#D4C5A9");
+    const redColor   = new THREE.Color("#C8506A");
 
     for (let i = 0; i < count; i++) {
       // Spread particles inside a deep 3D tunnel cylinder
