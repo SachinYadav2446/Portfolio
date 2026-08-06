@@ -166,8 +166,8 @@ export default function NetworkMap({ audio }) {
 
   return (
     <section id="tech-web" style={{
-      background: "#060608",
-      borderTop: "1px solid var(--glass-border)",
+      background: "var(--color-bg)",
+      borderTop: "1px solid var(--border-subtle)",
       position: "relative",
       zIndex: 2,
       overflow: "hidden",
@@ -177,11 +177,17 @@ export default function NetworkMap({ audio }) {
 
       {/* Section header — inside container so it gets padding */}
       <div className="container" style={{ position: "relative", zIndex: 10, paddingBottom: "2.5rem" }}>
-        <span className="font-sans-title" style={{ color: "var(--color-red)", fontSize: "0.85rem" }}>03 / THE SIGNAL GRID</span>
-        <BinaryHeading text="Engineering Signal Mesh" className="text-glow-cream" style={{ fontSize: "clamp(2.3rem, 5vw, 3.2rem)", marginTop: "0.5rem" }} />
+        <div className="ide-tab-bar" style={{ marginBottom: "1.5rem", background: "transparent", border: "none" }}>
+          <div className="ide-tab active" style={{ background: "var(--color-bg-card)", borderRadius: "4px 4px 0 0" }}>
+            <span style={{ fontSize: "0.6rem" }}>🗺️</span>
+            dependency-graph.svg
+          </div>
+        </div>
+        <span className="font-sans-title" style={{ color: "var(--color-purple)", fontSize: "0.72rem" }}>03 / DEPENDENCY GRAPH</span>
+        <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", marginTop: "0.5rem", color: "var(--color-fg)" }}>Skill Node Map</h2>
         <div className="accent-bar"></div>
-        <p style={{ color: "var(--color-cream-dim)", fontSize: "0.95rem", maxWidth: "750px", lineHeight: "1.6" }}>
-          Live schematic of my full-stack, ML, cloud, and systems architecture skill graph. Hover any node to light up its signal paths.
+        <p style={{ color: "var(--color-fg-muted)", fontSize: "0.9rem", maxWidth: "650px", lineHeight: "1.6", fontFamily: "var(--font-mono)" }}>
+          <span style={{ color: "var(--color-comment)" }}>// </span>Hover any node to highlight its dependency connections.
         </p>
       </div>
 
@@ -192,9 +198,9 @@ export default function NetworkMap({ audio }) {
           position: "relative",
           width: "100%",
           height: `${VPH}px`,
-          background: "rgba(3,3,5,0.92)",
-          borderTop: "2px solid #1a1a20",
-          borderBottom: "2px solid #1a1a20",
+          background: "rgba(30,31,41,0.95)",
+          borderTop: "2px solid var(--border-subtle)",
+          borderBottom: "2px solid var(--border-subtle)",
           overflow: "hidden",
           boxShadow: "inset 0 0 80px rgba(0,0,0,0.95)",
           marginBottom: "0"
@@ -223,7 +229,7 @@ export default function NetworkMap({ audio }) {
         >
           <defs>
             <pattern id="grid-tech" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(230,57,70,0.012)" strokeWidth="1" />
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(98,114,164,0.08)" strokeWidth="1" />
             </pattern>
           </defs>
           <rect width={vpW} height={VPH} fill="url(#grid-tech)" />
@@ -236,15 +242,15 @@ export default function NetworkMap({ audio }) {
             const path = `M ${cx} ${cy} L ${xm} ${cy} L ${xm} ${ty} L ${tx} ${ty}`;
             return (
               <g key={`bus-${node.id}`}>
-                {isHov && <path d={path} fill="none" stroke="var(--color-red)" strokeWidth="5" opacity="0.18" style={{ filter: "blur(3px)" }} />}
+                {isHov && <path d={path} fill="none" stroke="var(--color-purple)" strokeWidth="5" opacity="0.15" style={{ filter: "blur(3px)" }} />}
                 <path d={path} fill="none"
-                  stroke={isHov ? "var(--color-red)" : "rgba(230,57,70,0.06)"}
+                  stroke={isHov ? "var(--color-purple)" : "rgba(98,114,164,0.12)"}
                   strokeWidth={isHov ? "1.6" : "0.7"}
                   style={{ transition: "stroke 0.3s, stroke-width 0.3s" }}
                 />
-                <path d={path} fill="none" stroke="var(--color-red)" strokeWidth="0.9"
+                <path d={path} fill="none" stroke="var(--color-purple)" strokeWidth="0.9"
                   strokeDasharray="6,18" className="marching-pulse"
-                  style={{ opacity: isHov ? 1 : 0.3 }}
+                  style={{ opacity: isHov ? 1 : 0.2 }}
                 />
               </g>
             );
@@ -259,14 +265,14 @@ export default function NetworkMap({ audio }) {
             const path = wirePath(x1, y1, x2, y2, idx);
             return (
               <g key={`lnk-${idx}`}>
-                {isHov && <path d={path} fill="none" stroke="var(--color-red)" strokeWidth="4" opacity="0.2" style={{ filter: "blur(3px)" }} />}
+                {isHov && <path d={path} fill="none" stroke="var(--color-purple)" strokeWidth="4" opacity="0.2" style={{ filter: "blur(3px)" }} />}
                 <path d={path} fill="none"
-                  stroke={isHov ? "var(--color-red)" : "rgba(230,57,70,0.04)"}
+                  stroke={isHov ? "var(--color-purple)" : "rgba(98,114,164,0.07)"}
                   strokeWidth={isHov ? "1.4" : "0.5"}
                   style={{ transition: "stroke 0.3s, stroke-width 0.3s" }}
                 />
                 {isHov && (
-                  <path d={path} fill="none" stroke="var(--color-red)" strokeWidth="1.0"
+                  <path d={path} fill="none" stroke="var(--color-pink)" strokeWidth="1.0"
                     strokeDasharray="4,12" className="marching-pulse"
                     style={{ animationDuration: "1.6s" }}
                   />
@@ -288,12 +294,12 @@ export default function NetworkMap({ audio }) {
             <div style={{
               width: "76px", height: "76px", borderRadius: "50%",
               background: "#060608",
-              border: "2.5px solid var(--color-red)",
+              border: "2.5px solid var(--color-purple)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              boxShadow: "0 0 35px var(--color-red-glow-strong), inset 0 0 15px rgba(230,57,70,0.28)",
+              boxShadow: "0 0 30px rgba(189,147,249,0.4), inset 0 0 12px rgba(189,147,249,0.15)",
               position: "relative"
             }} className="center-avatar">
-              <Cpu size={30} color="var(--color-red)" />
+              <Cpu size={30} color="var(--color-purple)" />
               <span style={{
                 position: "absolute", top: "5px", right: "5px",
                 width: "8px", height: "8px", borderRadius: "50%",
@@ -334,26 +340,24 @@ export default function NetworkMap({ audio }) {
                 }}
               >
                 <div style={{
-                  background: active
-                    ? "linear-gradient(135deg,rgba(60,12,16,0.97),rgba(30,8,10,0.99))"
-                    : "linear-gradient(135deg,rgba(22,10,12,0.96),rgba(6,6,8,0.98))",
-                  border: `1.5px solid ${active ? "var(--color-red)" : "var(--glass-border)"}`,
-                  borderRadius: "24px",
-                  padding: "0.34rem 0.82rem",
-                  boxShadow: active
-                    ? "0 8px 22px rgba(0,0,0,0.85), 0 0 14px var(--color-red-glow)"
-                    : "0 3px 10px rgba(0,0,0,0.6)",
+                  background: "var(--color-bg-card)",
+                border: `1.5px solid ${active ? "var(--color-purple)" : "var(--glass-border)"}`,
+                borderRadius: "4px",
+                padding: "0.3rem 0.75rem",
+                boxShadow: active
+                    ? "0 6px 18px rgba(0,0,0,0.7), 0 0 12px rgba(189,147,249,0.25)"
+                    : "0 2px 8px rgba(0,0,0,0.4)",
                   display: "flex", alignItems: "center", gap: "0.42rem",
                   whiteSpace: "nowrap",
                   transition: "all 0.28s cubic-bezier(0.16,1,0.3,1)",
                   transform: active ? "scale(1.07)" : "scale(1)",
                   cursor: "default"
                 }} className="tech-mesh-node">
-                  <Cpu size={9} color={active ? "var(--color-red)" : "var(--color-cream-muted)"} />
+                  <Cpu size={9} color={active ? "var(--color-purple)" : "var(--color-comment)"} />
                   <span style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.03em",
-                    color: active ? "var(--color-cream)" : "var(--color-cream-dim)",
+                    color: active ? "var(--color-fg)" : "var(--color-fg-muted)",
                     transition: "color 0.28s"
                   }}>{node.label}</span>
                 </div>
