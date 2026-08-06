@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Cpu } from "lucide-react";
-import BinaryHeading from "./BinaryHeading";
+
 
 export default function NetworkMap({ audio }) {
   const [hoveredNode, setHoveredNode] = useState(null);
