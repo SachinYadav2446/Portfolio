@@ -8,13 +8,13 @@ import dynamic from "next/dynamic";
 const ThemeSettings = dynamic(() => import("./ThemeSettings"), { ssr: false });
 
 const IDE_TABS = [
-  { name: "home.tsx",        href: "#home",         icon: "📄" },
-  { name: "skills.ts",       href: "#home",         icon: "[S]" },
-  { name: "pull-requests.md",href: "#pull-requests",icon: "🔀" },
-  { name: "experience-map.md", href: "#experience-map", icon: "[M]" },
-  { name: "notes.md",          href: "#notes",          icon: "[N]" },
-  { name: "recruiter.md",      href: "#recruiter",      icon: "[R]" },
-  { name: "contact.tsx",     href: "#contact",      icon: "📨" },
+  { name: "home.tsx",          href: "#home",            icon: "[H]" },
+  { name: "experience-map.md", href: "#experience-map",  icon: "[M]" },
+  { name: "recruiter.md",      href: "#recruiter",       icon: "[R]" },
+  { name: "pull-requests.md",  href: "#pull-requests",   icon: "[P]" },
+  { name: "commit-story.log",  href: "#commit-story",    icon: "[C]" },
+  { name: "notes.md",          href: "#notes",           icon: "[N]" },
+  { name: "contact.tsx",       href: "#contact",         icon: "[+]" },
 ];
 
 const RPG_TABS = [
@@ -60,6 +60,24 @@ export default function Navbar({ audio }) {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const sections = tabs
+      .map((tab) => ({ tab, element: document.getElementById(tab.href.slice(1)) }))
+      .filter(({ element }) => element);
+    if (!sections.length) return undefined;
+
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (!visible) return;
+      const match = sections.find(({ element }) => element === visible.target);
+      if (match) setActiveTab(match.tab.name);
+    }, { rootMargin: "-20% 0px -65% 0px", threshold: 0 });
+
+    sections.forEach(({ element }) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [tabs]);
 
   // Title bar background adapts per theme
   const titleBg   = theme === "rpg" ? "#0A0818"           : "#1A1014";
