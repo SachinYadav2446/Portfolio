@@ -1,54 +1,107 @@
-/* Custom Premium CSS Design System - Sachin Yadav's Portfolio */
+/* IDE Theme — Wine & Cream Palette */
+/* Sachin Yadav Portfolio */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 :root {
-  /* Colors */
-  --background: #060608;
-  --foreground: #FFFDF9; /* Cream */
-  
-  --color-black: #060608;
-  --color-black-card: #0D0D11;
-  --color-black-elevated: #15151A;
-  
-  --color-cream: #FFFDF9;
-  --color-cream-dim: #DCD8CF;
-  --color-cream-muted: #8E8A82;
-  
-  --color-red: #E63946; /* Warm vibrant red */
-  --color-red-bright: #FF2E44;
-  --color-red-dark: #A81B27;
-  --color-red-glow: rgba(230, 57, 70, 0.18);
-  --color-red-glow-strong: rgba(230, 57, 70, 0.4);
-  
-  --glass-bg: rgba(13, 13, 17, 0.6);
-  --glass-border: rgba(255, 253, 249, 0.05);
-  
-  /* Fonts */
-  --font-sans: var(--font-poppins), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* ── Wine & Cream Editor Backgrounds ── */
+  --background:           #1A1014;
+  --color-bg:             #1A1014;   /* main editor — deep wine-black */
+  --color-bg-darker:      #120C10;   /* terminal / deep panels */
+  --color-bg-card:        #211519;   /* sidebar / cards */
+  --color-bg-elevated:    #2E1E24;   /* hover / elevated rows */
+  --color-bg-selection:   #3D2530;   /* selected line */
+  --color-bg-line:        #261820;   /* current line highlight */
+
+  /* ── Wine Syntax Tokens ── */
+  --color-wine:           #C8506A;   /* primary accent — keywords / wine red */
+  --color-wine-bright:    #E8607E;   /* brighter wine */
+  --color-wine-dim:       rgba(200, 80, 106, 0.18);
+  --color-wine-glow:      rgba(200, 80, 106, 0.28);
+  --color-wine-glow-strong: rgba(200, 80, 106, 0.5);
+
+  --color-rose:           #E8A0A8;   /* functions — soft rose */
+  --color-rose-dim:       rgba(232, 160, 168, 0.15);
+
+  --color-cream:          #F5ECD7;   /* primary foreground — warm cream */
+  --color-cream-dim:      #D4C5A9;   /* secondary text */
+  --color-cream-muted:    #8A7A6A;   /* muted / comments */
+  --color-cream-faint:    #3D2F28;   /* very faint */
+
+  --color-gold:           #C8A96E;   /* strings / constants — warm gold */
+  --color-gold-dim:       rgba(200, 169, 110, 0.15);
+
+  --color-sage:           #7BAE8A;   /* success / strings — sage green */
+  --color-sage-dim:       rgba(123, 174, 138, 0.15);
+
+  --color-amber:          #D4915A;   /* numbers / warnings — amber */
+  --color-sky:            #8AAECC;   /* variables / types — dusty sky */
+  --color-sky-dim:        rgba(138, 174, 204, 0.12);
+  --color-lavender:       #B09DC8;   /* special — dusty lavender */
+
+  --color-comment:        #6B5860;   /* comments — muted wine-grey */
+  --color-error:          #CC4444;   /* errors */
+
+  /* ── Glass / Borders ── */
+  --glass-bg:             rgba(33, 21, 25, 0.75);
+  --glass-border:         rgba(200, 80, 106, 0.15);
+  --glass-border-active:  rgba(200, 80, 106, 0.45);
+  --border-subtle:        rgba(61, 37, 48, 0.8);
+
+  /* ── Semantic aliases — keeps all existing components working ── */
+  --color-pink:           var(--color-wine);
+  --color-pink-dim:       var(--color-wine-dim);
+  --color-pink-glow:      var(--color-wine-glow);
+  --color-pink-glow-strong: var(--color-wine-glow-strong);
+  --color-purple:         var(--color-rose);
+  --color-purple-dim:     var(--color-rose-dim);
+  --color-purple-glow:    rgba(232, 160, 168, 0.25);
+  --color-cyan:           var(--color-sky);
+  --color-cyan-dim:       var(--color-sky-dim);
+  --color-green:          var(--color-sage);
+  --color-green-dim:      var(--color-sage-dim);
+  --color-orange:         var(--color-amber);
+  --color-yellow:         var(--color-gold);
+  --color-red:            var(--color-wine);
+  --color-red-bright:     var(--color-wine-bright);
+  --color-red-dark:       #8B2035;
+  --color-red-glow:       var(--color-wine-glow);
+  --color-red-glow-strong: var(--color-wine-glow-strong);
+
+  --color-black:          var(--color-bg);
+  --color-black-card:     var(--color-bg-card);
+  --color-black-elevated: var(--color-bg-elevated);
+  --color-fg:             var(--color-cream);
+  --color-fg-dim:         var(--color-cream-dim);
+  --color-fg-muted:       var(--color-cream-muted);
+  --color-fg-faint:       var(--color-cream-faint);
+
+  /* ── Fonts ── */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  --font-sans: var(--font-poppins), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-serif: var(--font-poppins), system-ui, sans-serif;
-  
-  /* Layout */
-  --max-width: 1400px;
-  --header-height: 80px;
-  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Layout ── */
+  --max-width:        1400px;
+  --header-height:    44px;
+  --sidebar-width:    220px;
+  --tab-height:       35px;
+
+  /* ── Transitions ── */
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Reset & Base Styles */
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+/* ── Reset ── */
+* { box-sizing: border-box; padding: 0; margin: 0; }
 
-html {
-  font-size: 85%;
-}
+html { font-size: 85%; }
 
 html, body {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--color-black);
-  color: var(--color-cream);
+  background-color: var(--color-bg);
+  color: var(--color-fg);
   font-family: var(--font-sans);
   overflow-x: hidden;
   scroll-behavior: smooth;
