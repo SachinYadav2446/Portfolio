@@ -109,82 +109,66 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Elegant Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-black);
-}
-
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--color-bg-card); }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-black-elevated);
-  border: 2px solid var(--color-black);
-  border-radius: 8px;
-  transition: var(--transition-smooth);
+  background: var(--color-bg-selection);
+  border-radius: 0;
 }
+::-webkit-scrollbar-thumb:hover { background: var(--color-wine); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-red);
-}
-
-/* Typography Selection */
+/* ── Selection ── */
 ::selection {
-  background-color: var(--color-red);
+  background-color: var(--color-wine-dim);
   color: var(--color-cream);
 }
 
-/* Core Layout Utilities */
+/* ── Container ── */
 .container {
   width: 100%;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 2rem;
 }
+@media (max-width: 768px) { .container { padding: 0 1.25rem; } }
 
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1.25rem;
-  }
-}
-
-/* Typography styles */
+/* ── Typography ── */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.1;
+  color: var(--color-cream);
 }
 
 .font-sans-title {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--color-comment);
 }
 
 p {
   color: var(--color-cream-dim);
   font-size: 1.05rem;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-/* Glassmorphism Classes */
+/* ── Glass cards ── */
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 6px;
 }
 
 .glass-card {
-  background: linear-gradient(135deg, rgba(21, 21, 26, 0.7) 0%, rgba(13, 13, 17, 0.5) 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--color-bg-card);
   border: 1px solid var(--glass-border);
-  border-radius: 20px;
+  border-radius: 6px;
   padding: 2.5rem;
   transition: var(--transition-smooth);
   position: relative;
