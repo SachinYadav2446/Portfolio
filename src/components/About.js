@@ -1,192 +1,343 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { Cpu, Layout, Award } from "lucide-react";
-import BinaryHeading from "./BinaryHeading";
+import { motion } from "framer-motion";
+import { FileText, ChevronRight, Hash } from "lucide-react";
 import AcademicJourney from "./AcademicJourney";
 
-// Reusable elegant 3D tilt component for About section panels
-function TiltPanel({ children, style, className, maxTilt = 8 }) {
-  const x = useMotionValue(0.5);
-  const y = useMotionValue(0.5);
+const skills = [
+  { category: "Backend & Languages",     color: "var(--color-pink)",   items: ["Python", "Golang", "Java", "Node.js", "Express", "FastAPI", "C++ / OOP"] },
+  { category: "Machine Learning & Data", color: "var(--color-purple)", items: ["NumPy", "Pandas", "Matplotlib", "Seaborn", "PyTorch", "Supervised ML", "Unsupervised ML", "GenAI"] },
+  { category: "Architecture & Design",   color: "var(--color-cyan)",   items: ["DSA", "HLD", "LLD", "Computer Architecture", "DBMS", "REST APIs"] },
+  { category: "Databases & Cloud",       color: "var(--color-green)",  items: ["SQL (PostgreSQL)", "MongoDB", "AWS RDS", "Docker", "AWS Lambda", "AWS Amplify", "Vercel", "Render", "Git / GitHub"] },
+  { category: "Frontend Core",           color: "var(--color-orange)", items: ["React.js", "Next.js", "WebGL / Three.js", "Framer Motion", "Redux Toolkit", "CSS / Tailwind"] },
+];
 
-  const rotateX = useTransform(y, [0, 1], [maxTilt, -maxTilt]);
-  const rotateY = useTransform(x, [0, 1], [-maxTilt, maxTilt]);
-
-  const springX = useSpring(rotateX, { stiffness: 120, damping: 22 });
-  const springY = useSpring(rotateY, { stiffness: 120, damping: 22 });
-
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    
-    x.set((e.clientX - rect.left) / width);
-    y.set((e.clientY - rect.top) / height);
-
-    // Glare effects if applicable
-    card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-    card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0.5);
-    y.set(0.5);
-  };
-
+function MdHeading({ level = 1, children, id }) {
+  const sizes = { 1: "2.2rem", 2: "1.6rem", 3: "1.2rem" };
+  const colors = { 1: "var(--color-fg)", 2: "var(--color-purple)", 3: "var(--color-cyan)" };
+  const prefix = "#".repeat(level);
   return (
-    <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <div
+      id={id}
       style={{
-        ...style,
-        rotateX: springX,
-        rotateY: springY,
-        transformStyle: "preserve-3d",
-        perspective: 1000,
+        display: "flex",
+        alignItems: "baseline",
+        gap: "0.5rem",
+        marginBottom: level === 1 ? "1.5rem" : "1rem",
+        marginTop: level === 1 ? 0 : "2rem",
+        borderBottom: level <= 2 ? "1px solid var(--border-subtle)" : "none",
+        paddingBottom: level <= 2 ? "0.5rem" : 0,
       }}
-      className={className}
     >
-      <div style={{ transform: "translateZ(20px)", transformStyle: "preserve-3d", height: "100%", width: "100%" }}>
+      <span
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "0.85rem",
+          color: "var(--color-comment)",
+          userSelect: "none",
+          flexShrink: 0,
+        }}
+      >
+        {prefix}
+      </span>
+      <h2
+        style={{
+          fontSize: sizes[level] || "1rem",
+          color: colors[level] || "var(--color-fg)",
+          fontFamily: "var(--font-sans)",
+          fontWeight: 700,
+          margin: 0,
+        }}
+      >
         {children}
+      </h2>
+    </div>
+  );
+}
+
+function MdCodeInline({ children, color }) {
+  return (
+    <code
+      style={{
+        fontFamily: "var(--font-mono)",
+        fontSize: "0.82em",
+        background: "var(--color-bg-elevated)",
+        border: "1px solid var(--border-subtle)",
+        color: color || "var(--color-cyan)",
+        padding: "0.1em 0.4em",
+        borderRadius: "3px",
+      }}
+    >
+      {children}
+    </code>
+  );
+}
+
+function SkillSection({ group, audio }) {
+  return (
+    <div style={{ marginBottom: "1.5rem" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          marginBottom: "0.75rem",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.7rem",
+            color: group.color,
+            fontWeight: 700,
+          }}
+        >
+          ###
+        </span>
+        <span
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.82rem",
+            color: "var(--color-fg-dim)",
+            fontWeight: 600,
+          }}
+        >
+          {group.category}
+        </span>
       </div>
-    </motion.div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", paddingLeft: "1rem" }}>
+        {group.items.map((skill) => (
+          <span
+            key={skill}
+            className="skill-tag"
+            onMouseEnter={() => audio?.playHover()}
+            style={{ borderColor: `${group.color}44`, color: group.color }}
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
 export default function About({ audio }) {
-  const skills = [
-    { category: "Backend & Languages", items: ["Python", "Golang", "Java", "Node.js", "Express", "FastAPI", "C++ / OOP"] },
-    { category: "Machine Learning & Data", items: ["NumPy", "Pandas", "Matplotlib", "Seaborn", "PyTorch", "Supervised ML", "Unsupervised ML", "GenAI"] },
-    { category: "Architecture & Design", items: ["DSA", "High-Level Design (HLD)", "Low-Level Design (LLD)", "Computer Architecture", "DBMS", "REST APIs"] },
-    { category: "Databases & Cloud", items: ["SQL (PostgreSQL)", "MongoDB", "AWS RDS", "Docker", "AWS Lambda", "AWS Amplify", "Vercel", "Render", "Git / GitHub"] },
-    { category: "Frontend Core", items: ["React.js", "Next.js", "WebGL / Three.js", "Framer Motion", "Redux Toolkit", "CSS / Tailwind"] }
-  ];
-
   return (
-    <section id="about" style={{ background: "#0A0A0E", borderTop: "1px solid var(--glass-border)", position: "relative", zIndex: 2 }}>
-      <div className="grid-bg"></div>
-      <div className="container">
-        
-        {/* About Header */}
-        <div style={{ marginBottom: "5rem" }}>
-          <span className="font-sans-title" style={{ color: "var(--color-red)", fontSize: "0.85rem" }}>01 / ABOUT ME</span>
-          <BinaryHeading text="The Creative Mindset" style={{ fontSize: "clamp(2.5rem, 5vw, 3.5rem)", marginTop: "0.5rem" }} className="text-glow-cream" />
-          <div className="accent-bar"></div>
+    <section
+      id="about"
+      style={{
+        background: "var(--color-bg)",
+        borderTop: "1px solid var(--border-subtle)",
+        padding: "0",
+      }}
+    >
+      {/* Tab bar for this section */}
+      <div className="ide-tab-bar">
+        <div className="ide-tab active">
+          <FileText size={12} />
+          about.md
         </div>
-
-        {/* Section Grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "4rem", marginBottom: "5rem" }} className="about-grid">
-          
-          {/* Narrative Story */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: "1.8rem", fontWeight: "400" }}>
-              Hey, I'm <span style={{ fontWeight: 700, color: "var(--color-red)" }}>Sachin Yadav</span>.
-            </h3>
-            <p>
-              I am a 2nd-year Computer Science student specializing in full-stack engineering, machine learning pipelines, and backend systems design. I bridge the gap between rigorous systems architecture and high-performance interactive interfaces.
-            </p>
-            <p style={{ color: "var(--color-cream-muted)" }}>
-              Instead of sticking to standard structures, I develop interconnected applications. I write low-latency real-time collaboration servers, build machine learning grids (supervised/unsupervised models using NumPy, Pandas, Matplotlib, and Seaborn), design database engines (SQL and MongoDB), and implement robust system schemas (LLD & HLD) in Java, Python, and Go.
-            </p>
-
-            {/* Micro Cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }} className="mini-cards">
-              <TiltPanel 
-                className="glass-panel clickable" 
-                style={{ padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--glass-border)" }} 
-                maxTilt={10}
-                onMouseEnter={() => audio?.playHover()}
-                onClick={() => audio?.playClick()}
-              >
-                <Cpu size={24} color="var(--color-red)" style={{ marginBottom: "0.5rem" }} />
-                <h4 style={{ fontSize: "1.05rem", fontFamily: "var(--font-sans)", marginBottom: "0.25rem" }}>100% Custom Design</h4>
-                <p style={{ fontSize: "0.85rem", color: "var(--color-cream-muted)", margin: 0 }}>Written from scratch with pure, optimized CSS styling.</p>
-              </TiltPanel>
-              <TiltPanel 
-                className="glass-panel clickable" 
-                style={{ padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--glass-border)" }} 
-                maxTilt={10}
-                onMouseEnter={() => audio?.playHover()}
-                onClick={() => audio?.playClick()}
-              >
-                <Award size={24} color="var(--color-red)" style={{ marginBottom: "0.5rem" }} />
-                <h4 style={{ fontSize: "1.05rem", fontFamily: "var(--font-sans)", marginBottom: "0.25rem" }}>3D Integration</h4>
-                <p style={{ fontSize: "0.85rem", color: "var(--color-cream-muted)", margin: 0 }}>Fusing GPU-accelerated WebGL directly into UI states.</p>
-              </TiltPanel>
-            </div>
-          </div>
-
-          {/* Skill Blocks */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }} className="skills-pane">
-            <h3 style={{ fontFamily: "var(--font-sans)", fontSize: "1.2rem", textTransform: "uppercase", letterSpacing: "0.08em", fontWeight: 700, color: "var(--color-cream)" }}>
-              Core Technical Stack
-            </h3>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              {skills.map((skillGroup, index) => (
-                <div key={index} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.03)", paddingBottom: "1.2rem" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.8rem" }}>
-                    <span style={{ fontSize: "0.65rem", fontFamily: "monospace", color: "var(--color-red)", letterSpacing: "0.08em" }}>[0{index + 1}]</span>
-                    <span style={{ fontSize: "0.82rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.06em", fontFamily: "monospace", color: "var(--color-cream)" }}>
-                      {skillGroup.category}
-                    </span>
-                  </div>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
-                    {skillGroup.items.map((skill) => (
-                      <span
-                        key={skill}
-                        style={{
-                          fontSize: "0.72rem",
-                          background: "rgba(230, 57, 70, 0.02)",
-                          border: "1px solid rgba(230, 57, 70, 0.18)",
-                          color: "var(--color-cream-dim)",
-                          padding: "0.28rem 0.65rem",
-                          borderRadius: "4px",
-                          fontFamily: "monospace",
-                          transition: "all 0.3s ease"
-                        }}
-                        className="skill-tag clickable"
-                        onMouseEnter={() => audio?.playHover()}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-
-        {/* Academic Journey - Full Page Scroll */}
-        <AcademicJourney audio={audio} />
-
+        <div style={{ flex: 1, borderBottom: "1px solid var(--border-subtle)" }} />
       </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1.1fr",
+          minHeight: "calc(100vh - 79px)",
+        }}
+        className="about-grid"
+      >
+        {/* Left: rendered markdown */}
+        <div
+          style={{
+            borderRight: "1px solid var(--border-subtle)",
+            padding: "3rem 3rem 4rem 3rem",
+            overflowY: "auto",
+          }}
+        >
+          <MdHeading level={1}>About Me</MdHeading>
+
+          <p style={{ marginBottom: "1.2rem", lineHeight: 1.8, color: "var(--color-fg-dim)" }}>
+            Hey, I&apos;m <MdCodeInline color="var(--color-pink)">Sachin Yadav</MdCodeInline> — a 2nd-year CS student
+            specializing in <MdCodeInline color="var(--color-purple)">full-stack engineering</MdCodeInline>,{" "}
+            <MdCodeInline color="var(--color-cyan)">machine learning pipelines</MdCodeInline>, and{" "}
+            <MdCodeInline color="var(--color-green)">backend systems design</MdCodeInline>.
+          </p>
+
+          <p style={{ marginBottom: "1.5rem", lineHeight: 1.8, color: "var(--color-fg-dim)" }}>
+            I build interconnected applications — from low-latency real-time collaboration servers to ML grids using{" "}
+            <MdCodeInline>NumPy</MdCodeInline>, <MdCodeInline>Pandas</MdCodeInline>, and{" "}
+            <MdCodeInline>PyTorch</MdCodeInline>. I design database engines in SQL and MongoDB and implement robust system
+            schemas using LLD &amp; HLD patterns in Java, Python, and Go.
+          </p>
+
+          {/* Blockquote callout */}
+          <div
+            style={{
+              borderLeft: "3px solid var(--color-purple)",
+              paddingLeft: "1rem",
+              margin: "1.5rem 0",
+              background: "var(--color-purple-dim)",
+              borderRadius: "0 4px 4px 0",
+              padding: "0.75rem 1rem",
+            }}
+          >
+            <p style={{ margin: 0, color: "var(--color-fg-dim)", fontStyle: "italic", fontSize: "0.92rem" }}>
+              "I bridge rigorous systems architecture with high-performance interactive interfaces."
+            </p>
+          </div>
+
+          <MdHeading level={2}>Quick Stats</MdHeading>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0.75rem",
+              marginBottom: "2rem",
+            }}
+            className="stats-grid"
+          >
+            {[
+              { label: "Focus",    value: "Full-Stack + ML",   color: "var(--color-pink)"   },
+              { label: "Year",     value: "2nd Year CS",       color: "var(--color-purple)" },
+              { label: "Location", value: "Bangalore, India",  color: "var(--color-cyan)"   },
+              { label: "Status",   value: "Open to internships",color: "var(--color-green)" },
+            ].map((stat) => (
+              <motion.div
+                key={stat.label}
+                whileHover={{ scale: 1.02 }}
+                style={{
+                  background: "var(--color-bg-card)",
+                  border: "1px solid var(--border-subtle)",
+                  borderRadius: "4px",
+                  padding: "0.75rem 1rem",
+                  borderLeft: `3px solid ${stat.color}`,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.62rem",
+                    color: "var(--color-comment)",
+                    marginBottom: "0.25rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.06em",
+                  }}
+                >
+                  {stat.label}
+                </div>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.82rem",
+                    color: stat.color,
+                    fontWeight: 700,
+                  }}
+                >
+                  {stat.value}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <MdHeading level={2}>Skills</MdHeading>
+          {skills.map((group) => (
+            <SkillSection key={group.category} group={group} audio={audio} />
+          ))}
+        </div>
+
+        {/* Right: raw markdown source (IDE dual-pane effect) */}
+        <div
+          style={{
+            background: "var(--color-bg-darker)",
+            padding: "3rem 2.5rem",
+            overflowY: "auto",
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.78rem",
+            lineHeight: 1.7,
+            color: "var(--color-comment)",
+          }}
+        >
+          {/* "Source" label */}
+          <div
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.62rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              color: "var(--color-comment)",
+              borderBottom: "1px solid var(--border-subtle)",
+              paddingBottom: "0.5rem",
+              marginBottom: "1.5rem",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <span style={{ opacity: 0.5 }}>📄</span> Source — about.md
+          </div>
+
+          {/* Raw markdown lines */}
+          {[
+            { line: "# About Me",           color: "var(--color-pink)" },
+            { line: "" },
+            { line: "Hey, I'm **Sachin Yadav**.",     color: "var(--color-fg-dim)" },
+            { line: "2nd year CS student.",           color: "var(--color-fg-dim)" },
+            { line: "" },
+            { line: "## Focus Areas",       color: "var(--color-purple)" },
+            { line: "" },
+            { line: "- Full-Stack Engineering",       color: "var(--color-green)" },
+            { line: "- Machine Learning Pipelines",   color: "var(--color-green)" },
+            { line: "- Backend Systems Design",       color: "var(--color-green)" },
+            { line: "- Real-Time Systems",            color: "var(--color-green)" },
+            { line: "" },
+            { line: "## Stack",             color: "var(--color-purple)" },
+            { line: "" },
+            { line: "```python",            color: "var(--color-comment)" },
+            { line: "stack = [",            color: "var(--color-fg-dim)" },
+            { line: '  "Python", "Golang", "Java",',  color: "var(--color-orange)" },
+            { line: '  "Node.js", "React", "Next.js",',color: "var(--color-orange)" },
+            { line: '  "FastAPI", "PyTorch", "SQL"',  color: "var(--color-orange)" },
+            { line: "]",                    color: "var(--color-fg-dim)" },
+            { line: "```",                  color: "var(--color-comment)" },
+            { line: "" },
+            { line: "## Contact",           color: "var(--color-purple)" },
+            { line: "" },
+            { line: "📧 yadavsachin2446@gmail.com",   color: "var(--color-cyan)" },
+            { line: "📍 Bangalore, India",            color: "var(--color-cyan)" },
+            { line: "" },
+            { line: "> Open to internships &",        color: "var(--color-comment)", italic: true },
+            { line: "> open-source collaborations.",  color: "var(--color-comment)", italic: true },
+          ].map((item, i) => (
+            <div
+              key={i}
+              style={{
+                color: item.color || "var(--color-comment)",
+                fontStyle: item.italic ? "italic" : "normal",
+                minHeight: "1.4em",
+                padding: "0 0.5rem",
+              }}
+            >
+              {item.line}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Academic Journey below */}
+      <AcademicJourney audio={audio} />
 
       <style jsx global>{`
         @media (max-width: 900px) {
           .about-grid {
             grid-template-columns: 1fr !important;
-            gap: 2.5rem !important;
           }
-        }
-        @media (max-width: 500px) {
-          .mini-cards {
+          .stats-grid {
             grid-template-columns: 1fr !important;
           }
-        }
-        .skill-tag:hover {
-          border-color: var(--color-red) !important;
-          color: var(--color-cream) !important;
-          background: rgba(230, 57, 70, 0.15) !important;
-          box-shadow: 0 0 12px var(--color-red-glow-strong);
-          transform: translateY(-1px);
-        }
-        .timeline-btn:hover h4 {
-          color: var(--color-cream) !important;
         }
       `}</style>
     </section>
