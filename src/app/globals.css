@@ -1169,3 +1169,11 @@ section {
   box-shadow: 6px 6px 0 rgba(26,26,26,0.08);
   transform: translate(-2px,-2px);
 }
+
+@media (max-width: 800px) {
+  .recruiter-grid,
+  .recruiter-detail-grid,
+  .repo-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

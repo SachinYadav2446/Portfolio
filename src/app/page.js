@@ -25,6 +25,7 @@ const NetworkMap        = dynamic(() => import("@/components/NetworkMap"),      
 const PullRequests      = dynamic(() => import("@/components/PullRequests"),      { ssr: false });
 const ExtensionMarketplace = dynamic(() => import("@/components/ExtensionMarketplace"), { ssr: false });
 const DebugPanel        = dynamic(() => import("@/components/DebugPanel"),        { ssr: false });
+const RecruiterMode      = dynamic(() => import("@/components/RecruiterMode"),      { ssr: false });
 
 export default function Home() {
   const audio = useAudio();
@@ -52,6 +53,8 @@ export default function Home() {
         <DebugPanel audio={audio} />
 
         {/* 05 — Extension Marketplace */}
+        <RecruiterMode audio={audio} />
+
         <ExtensionMarketplace audio={audio} />
 
         {/* Social strip */}

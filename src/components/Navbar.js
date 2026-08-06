@@ -12,7 +12,8 @@ const IDE_TABS = [
   { name: "about.md",        href: "#about",        icon: "📝" },
   { name: "pull-requests.md",href: "#pull-requests",icon: "🔀" },
   { name: "debug-session.ts",href: "#debug",        icon: "🐛" },
-  { name: "extensions.mkt",  href: "#marketplace",  icon: "🧩" },
+  { name: "recruiter.md",    href: "#recruiter",    icon: "[R]" },
+  { name: "extensions.mkt",  href: "#marketplace",  icon: "[E]" },
   { name: "contact.tsx",     href: "#contact",      icon: "📨" },
 ];
 
