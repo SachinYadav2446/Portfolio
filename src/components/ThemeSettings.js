@@ -9,8 +9,8 @@ import { useTheme } from "./ThemeContext";
 const THEMES = [
   { id:"ide", name:"IDE / Editor", desc:"VS Code-style developer environment.", preview:["#1A1014","#C8506A","#F5ECD7","#C8A96E"], tag:"Default" },
   { id:"rpg", name:"RPG Interface", desc:"Game-inspired quest and achievement view.", preview:["#0D0D1A","#FFD700","#E8E0FF","#C084FC"], tag:"New" },
-  { id:"os", name:"Interactive OS", desc:"Desktop-style workspace with windows and Dock.", preview:["#1C2B3A","#0071E3","#ECE9E3","#30D158"], tag:"New" },
-  { id:"gallery", name:"Museum / Gallery", desc:"Editorial archive with an ink and cream palette.", preview:["#F8F6F1","#1A1A1A","#8B6F47","#3A5F8A"], tag:"New" },
+  { id:"os", name:"Interactive OS", desc:"Desktop-style workspace with windows and Dock.", preview:["#2B3A4E","#0A66C2","#F7F5EF","#A855F7"], tag:"New" },
+  { id:"gallery", name:"Museum / Gallery", desc:"Editorial archive with paper and ochre palette.", preview:["#F4EFE6","#2B2417","#B08354","#6B7F4E"], tag:"New" },
 ];
 const TRACKS = [
   { id:"healing", title:"Healing Vibes", subtitle:"Soft calm playlist", src:"/music/healing-vibes.mp3" },
@@ -22,24 +22,54 @@ const formatTime = (value) => Number.isFinite(value) ? `${Math.floor(value / 60)
 export default function ThemeSettings({ onClose, audio }) {
   const { theme, setTheme } = useTheme();
   const [selected, setSelected] = useState(theme);
-  const [trackId, setTrackId] = useState(null);
+  const [trackId, setTrackId] = useState("healing");
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.55);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const defaultTrack = TRACKS[0];
 
   useEffect(() => {
     if (!sharedMusicPlayer) sharedMusicPlayer = new Audio();
     const player = sharedMusicPlayer;
+    if (!player.dataset.track) {
+      player.src = defaultTrack.src;
+      player.dataset.track = defaultTrack.src;
+      player.volume = volume;
+      player.loop = true;
+    }
     const sync = () => {
       setIsPlaying(!player.paused);
       setProgress(player.currentTime || 0);
       setDuration(player.duration || 0);
       setTrackId(TRACKS.find((track) => track.src === player.dataset.track)?.id || null);
     };
+    const attemptAutoplay = () => {
+      if (!player.dataset.track || player.paused) {
+        player.src = defaultTrack.src;
+        player.dataset.track = defaultTrack.src;
+        player.volume = volume;
+        player.loop = true;
+        player.play().then(() => { setTrackId(defaultTrack.id); setIsPlaying(true); }).catch(() => {});
+      }
+      window.removeEventListener("click", attemptAutoplay, { capture: true, once: true });
+      window.removeEventListener("keydown", attemptAutoplay, { capture: true, once: true });
+      window.removeEventListener("touchstart", attemptAutoplay, { capture: true, once: true });
+    };
+    setTimeout(() => {
+      window.addEventListener("click", attemptAutoplay, { capture: true, once: true, passive: true });
+      window.addEventListener("keydown", attemptAutoplay, { capture: true, once: true, passive: true });
+      window.addEventListener("touchstart", attemptAutoplay, { capture: true, once: true, passive: true });
+    }, 0);
     ["play", "pause", "timeupdate", "loadedmetadata", "ended"].forEach((event) => player.addEventListener(event, sync));
     sync();
-    return () => ["play", "pause", "timeupdate", "loadedmetadata", "ended"].forEach((event) => player.removeEventListener(event, sync));
+    return () => {
+      ["play", "pause", "timeupdate", "loadedmetadata", "ended"].forEach((event) => player.removeEventListener(event, sync));
+      window.removeEventListener("click", attemptAutoplay, { capture: true });
+      window.removeEventListener("keydown", attemptAutoplay, { capture: true });
+      window.removeEventListener("touchstart", attemptAutoplay, { capture: true });
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const selectTrack = (track) => {
