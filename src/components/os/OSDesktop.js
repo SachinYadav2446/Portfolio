@@ -244,7 +244,7 @@ function TerminalContent({ audio }) {
   const [hist, setHist] = useState([]);
   const [hi, setHi] = useState(-1);
   const inputRef = useRef(null);
-  const bottomRef = useRef(null);
+  const scrollerRef = useRef(null);
 
   const run = (raw) => {
     const cmd = raw.trim().toLowerCase();
@@ -267,13 +267,16 @@ function TerminalContent({ audio }) {
       { kind:"out", text:"sachin-macbook ~ % ", color:"#30D158" }]);
     setHist(p => [raw, ...p]); setHi(-1);
     audio?.playClick();
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior:"smooth" }), 30);
+    setTimeout(() => {
+      const el = scrollerRef.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }, 30);
   };
 
   return (
     <div style={{ height:"100%", display:"flex", flexDirection:"column", background:"rgba(30,30,30,0.97)", cursor:"text" }}
       onClick={() => inputRef.current?.focus()}>
-      <div style={{ flex:1, overflowY:"auto", padding:"0.75rem 1rem", fontFamily:"monospace", fontSize:"0.78rem", lineHeight:1.6, color:"#e8e8e8" }}>
+      <div ref={scrollerRef} style={{ flex:1, overflowY:"auto", padding:"0.75rem 1rem", fontFamily:"monospace", fontSize:"0.78rem", lineHeight:1.6, color:"#e8e8e8" }}>
         {lines.map((l, i) => (
           <div key={i}>
             {l.kind === "prompt"
@@ -281,7 +284,6 @@ function TerminalContent({ audio }) {
               : <span style={{ color: l.color || "#e8e8e8" }}>{l.text}</span>}
           </div>
         ))}
-        <div ref={bottomRef}/>
       </div>
       <div style={{ display:"flex", alignItems:"center", padding:"0.5rem 1rem", borderTop:"1px solid rgba(255,255,255,0.08)", fontFamily:"monospace", fontSize:"0.78rem" }}>
         <span style={{ color:"#30D158", flexShrink:0 }}>sachin-macbook ~ % </span>
