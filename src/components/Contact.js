@@ -83,7 +83,7 @@ function InteractiveTerminal({ audio }) {
   const [lines, setLines] = useState(initLines);
   const [input, setInput] = useState("");
   const inputRef = useRef(null);
-  const bottomRef = useRef(null);
+  const scrollerRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -110,7 +110,10 @@ function InteractiveTerminal({ audio }) {
     setInput("");
     audio?.playClick();
 
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 50);
+    setTimeout(() => {
+      const el = scrollerRef.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }, 50);
   };
 
   return (
@@ -157,6 +160,7 @@ function InteractiveTerminal({ audio }) {
 
       {/* Output */}
       <div
+        ref={scrollerRef}
         style={{
           flex: 1,
           overflowY: "auto",
@@ -170,7 +174,6 @@ function InteractiveTerminal({ audio }) {
         }}
       >
         {lines.map((line, i) => <TerminalLine key={i} line={line} />)}
-        <div ref={bottomRef} />
       </div>
 
       {/* Input */}
