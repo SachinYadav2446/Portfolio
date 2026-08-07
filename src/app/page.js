@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Contact from "@/components/Contact";
@@ -30,6 +30,22 @@ const EngineeringNotes   = dynamic(() => import("@/components/EngineeringNotes")
 
 export default function Home() {
   const audio = useAudio();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.location.hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    let raf;
+    const forceTop = () => {
+      if (window.scrollY !== 0 || window.scrollX !== 0) {
+        window.scrollTo(0, 0);
+      }
+      raf = requestAnimationFrame(forceTop);
+    };
+    raf = requestAnimationFrame(forceTop);
+    const t = setTimeout(() => cancelAnimationFrame(raf), 400);
+    return () => { clearTimeout(t); cancelAnimationFrame(raf); };
+  }, []);
 
   return (
     <>
