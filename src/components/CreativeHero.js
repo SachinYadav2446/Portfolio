@@ -111,7 +111,7 @@ const CMDS = {
   whoami:{
     out:[
       { color:"var(--color-wine)",         text:"Sachin Yadav" },
-      { color:"var(--color-cream-dim)",    text:"2nd Year CS Student @ Bangalore" },
+      { color:"var(--color-cream-dim)",    text:"3rd Year CS Student @ Bangalore" },
       { color:"var(--color-sage)",         text:"Full-Stack Engineer  |  ML Practitioner" },
       { color:"var(--color-sky)",          text:"Open to internships  |  Open to collabs" },
     ]
@@ -332,7 +332,7 @@ function InteractiveTerminal({ audio }) {
 const TOOLTIPS = {
   5:  "💡 name: \"Sachin Yadav\" — the person behind the code",
   6:  "💡 role: Full-Stack & ML Engineer",
-  7:  "💡 year: 2 — 2nd year CS undergrad",
+  7:  "💡 year: 3 — 3rd year CS undergrad",
   9:  "💡 available: true — actively seeking internships!",
   11: "💡 stack: 9 core technologies",
   17: "💡 interests: what drives the work",

@@ -11,7 +11,7 @@ const poppins = Poppins({
 
 export const metadata = {
   title: "Sachin Yadav | Full-Stack & ML Engineer",
-  description: "Portfolio of Sachin Yadav — 2nd-year CS student & full-stack engineer.",
+  description: "Portfolio of Sachin Yadav — 3rd-year CS student & full-stack engineer.",
   keywords: ["Sachin Yadav", "Portfolio", "Full-Stack Developer", "Machine Learning", "Next.js"],
   authors: [{ name: "Sachin Yadav" }],
 };

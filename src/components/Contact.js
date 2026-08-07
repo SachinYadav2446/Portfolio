@@ -40,7 +40,7 @@ const commands = {
   about: [
     { text: "Name:     Sachin Yadav",         color: "var(--color-fg-dim)" },
     { text: "Role:     Full-Stack & ML Eng",  color: "var(--color-purple)" },
-    { text: "Year:     2nd Year CS Student",  color: "var(--color-fg-dim)" },
+    { text: "Year:     3rd Year CS Student",  color: "var(--color-fg-dim)" },
     { text: "Location: Bangalore, India",      color: "var(--color-cyan)"   },
     { text: "Status:   Open to internships",  color: "var(--color-green)"  },
   ],

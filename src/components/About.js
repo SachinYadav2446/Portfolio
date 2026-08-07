@@ -160,7 +160,7 @@ export default function About({ audio }) {
           <MdHeading level={1}>About Me</MdHeading>
 
           <p style={{ marginBottom: "1.2rem", lineHeight: 1.8, color: "var(--color-fg-dim)" }}>
-            Hey, I&apos;m <MdCodeInline color="var(--color-pink)">Sachin Yadav</MdCodeInline> — a 2nd-year CS student
+            Hey, I&apos;m <MdCodeInline color="var(--color-pink)">Sachin Yadav</MdCodeInline> — a 3rd-year CS student
             specializing in <MdCodeInline color="var(--color-purple)">full-stack engineering</MdCodeInline>,{" "}
             <MdCodeInline color="var(--color-cyan)">machine learning pipelines</MdCodeInline>, and{" "}
             <MdCodeInline color="var(--color-green)">backend systems design</MdCodeInline>.
@@ -202,7 +202,7 @@ export default function About({ audio }) {
           >
             {[
               { label: "Focus",    value: "Full-Stack + ML",   color: "var(--color-pink)"   },
-              { label: "Year",     value: "2nd Year CS",       color: "var(--color-purple)" },
+              { label: "Year",     value: "3rd Year CS",       color: "var(--color-purple)" },
               { label: "Location", value: "Bangalore, India",  color: "var(--color-cyan)"   },
               { label: "Status",   value: "Open to internships",color: "var(--color-green)" },
             ].map((stat) => (
@@ -285,7 +285,7 @@ export default function About({ audio }) {
             { line: "# About Me",           color: "var(--color-pink)" },
             { line: "" },
             { line: "Hey, I'm **Sachin Yadav**.",     color: "var(--color-fg-dim)" },
-            { line: "2nd year CS student.",           color: "var(--color-fg-dim)" },
+            { line: "3rd year CS student.",           color: "var(--color-fg-dim)" },
             { line: "" },
             { line: "## Focus Areas",       color: "var(--color-purple)" },
             { line: "" },

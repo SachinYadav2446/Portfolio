@@ -340,7 +340,7 @@ function CharacterScreen({ audio }) {
           </div>
           <p style={{ fontFamily:"var(--font-mono)", fontSize:"0.78rem", color:"var(--color-cream-dim)",
             lineHeight:1.75, margin:0 }}>
-            <span style={{ color:"var(--color-wine)" }}>Sachin Yadav</span> is a 2nd-year Computer Science student
+            <span style={{ color:"var(--color-wine)" }}>Sachin Yadav</span> is a 3rd-year Computer Science student
             based in <span style={{ color:"var(--color-sage)" }}>Bangalore</span>, specializing in the arcane arts of{" "}
             <span style={{ color:"var(--color-sky)" }}>full-stack engineering</span>,{" "}
             <span style={{ color:"var(--color-lavender)" }}>machine learning pipelines</span>, and{" "}

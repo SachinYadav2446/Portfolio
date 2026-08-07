@@ -191,7 +191,7 @@ export default function GalleryHome({ audio }) {
           <div>
             <div className="gallery-label" style={{ marginBottom:"1rem" }}>Curator&apos;s Note</div>
             <div style={{ width:40, height:2, background:"var(--color-cream)", marginBottom:"1.5rem" }}/>
-            <div className="gallery-exhibit-num">Sachin Yadav<br/>2nd Year CS · Bangalore<br/>yadavsachin2446@gmail.com</div>
+            <div className="gallery-exhibit-num">Sachin Yadav<br/>3rd Year CS · Bangalore<br/>yadavsachin2446@gmail.com</div>
           </div>
           <div>
             <p style={{ fontSize:"1.05rem", fontFamily:"'Playfair Display', Georgia, serif", lineHeight:1.8, color:"var(--color-cream-dim)", marginBottom:"1.25rem" }}>

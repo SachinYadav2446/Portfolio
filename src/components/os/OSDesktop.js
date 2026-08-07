@@ -124,7 +124,7 @@ function AboutContent() {
       </div>
       <h2 style={{ fontSize:"1.3rem", fontWeight:700, marginBottom:"0.75rem", color:"#1D1D1F" }}>Sachin Yadav</h2>
       <p style={{ marginBottom:"0.75rem", color:"#3D3D3F" }}>
-        2nd-year Computer Science student at Bangalore. I build full-stack applications, ML pipelines, and real-time systems from the ground up.
+        3rd-year Computer Science student at Bangalore. I build full-stack applications, ML pipelines, and real-time systems from the ground up.
       </p>
       <p style={{ marginBottom:"0.75rem", color:"#3D3D3F" }}>
         I write low-latency WebSocket servers, train neural networks with PyTorch and Pandas, design database schemas (SQL + MongoDB), and implement LLD/HLD system patterns in Java, Python, and Go.
