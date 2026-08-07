@@ -179,10 +179,14 @@ function InteractiveTerminal({ audio }) {
   const [cmdHist, setCmdHist]     = useState([]);
   const [histIdx, setHistIdx]     = useState(-1);
   const inputRef  = useRef(null);
-  const bottomRef = useRef(null);
+  const scrollerRef = useRef(null);
 
   const scrollBottom = useCallback(() => {
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior:"smooth" }), 30);
+    setTimeout(() => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      el.scrollTop = el.scrollHeight;
+    }, 30);
   }, []);
 
   const run = useCallback((raw) => {
@@ -273,7 +277,7 @@ function InteractiveTerminal({ audio }) {
       </div>
 
       {/* Output */}
-      <div style={{
+      <div ref={scrollerRef} style={{
         flex:1, overflowY:"auto", padding:"0.6rem 0.75rem",
         fontFamily:"var(--font-mono)", fontSize:"0.73rem", lineHeight:1.6,
       }}>
@@ -291,7 +295,6 @@ function InteractiveTerminal({ audio }) {
             )}
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
       {/* Input row */}
